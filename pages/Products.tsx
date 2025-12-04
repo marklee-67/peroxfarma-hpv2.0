@@ -1,0 +1,63 @@
+
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useProducts } from '../context/ProductContext';
+
+const Products: React.FC = () => {
+  const { products } = useProducts();
+
+  return (
+    <div className="w-full">
+      {/* Hero */}
+      <section className="bg-background-light py-20">
+        <div className="mx-auto max-w-[1200px] px-4 text-center">
+          <h1 className="text-4xl font-black text-text-primary mb-6">주요 제품 라인업</h1>
+          <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+            당신의 건강 목표 달성을 도와줄 다양한 제품들을 만나보세요.<br/>
+            모든 제품은 엄격한 품질 관리를 거쳐 생산됩니다.
+          </p>
+        </div>
+      </section>
+
+      {/* Product Grid */}
+      <section className="mx-auto max-w-[1200px] px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+           {products.map((product) => (
+             <div key={product.id} className="group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all cursor-pointer">
+               <div className="aspect-square overflow-hidden bg-gray-50">
+                 <img src={product.img} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+               </div>
+               <div className="p-6">
+                 <span className="inline-block bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded-full mb-3">
+                   {product.tag}
+                 </span>
+                 <h3 className="text-lg font-bold text-text-primary mb-2 leading-tight">{product.title}</h3>
+                 <p className="text-sm text-text-secondary">{product.desc}</p>
+               </div>
+             </div>
+           ))}
+        </div>
+      </section>
+
+      {/* Banner */}
+      <section className="py-20 px-4">
+        <div className="mx-auto max-w-[1200px] bg-primary rounded-2xl p-12 text-center text-white relative overflow-hidden">
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold mb-4">이제 당신의 건강을 챙길 시간입니다</h2>
+            <p className="text-white/90 mb-8 max-w-xl mx-auto">
+              지금 바로 무료 건강 상담을 시작하고, 나에게 꼭 맞는 맞춤 영양제를 찾아보세요.
+            </p>
+            <Link to="/contact" className="inline-flex h-12 px-8 items-center justify-center rounded-full bg-white text-primary font-bold shadow-lg hover:bg-gray-50 transition-colors">
+              상담 신청하기
+            </Link>
+          </div>
+          {/* Decorative Circle */}
+          <div className="absolute -top-24 -right-24 w-64 h-64 bg-white/10 rounded-full"></div>
+          <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-white/10 rounded-full"></div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Products;
