@@ -1,7 +1,10 @@
 
 import React from 'react';
+import { useProducts } from '../context/ProductContext';
 
 const Contact: React.FC = () => {
+  const { contactConfig } = useProducts();
+
   return (
     <div className="w-full bg-background-light">
       <div className="mx-auto max-w-[1200px] px-4 py-20">
@@ -10,25 +13,20 @@ const Contact: React.FC = () => {
           {/* Left Column */}
           <div className="lg:col-span-5 flex flex-col gap-12">
             <div>
-              <h1 className="text-4xl font-black text-text-primary mb-4">무엇을 도와드릴까요?</h1>
-              <p className="text-text-secondary">궁금한 점이 있으시면 언제든지 문의해주세요.</p>
+              <h1 className="text-4xl font-black text-text-primary mb-4">{contactConfig.pageTitle}</h1>
+              <p className="text-text-secondary">{contactConfig.pageSubtitle}</p>
             </div>
           </div>
 
           {/* Right Column: Form */}
           <div className="lg:col-span-7">
             <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm">
-              <h2 className="text-2xl font-bold mb-6 text-text-primary">1:1 문의하기</h2>
+              <h2 className="text-2xl font-bold mb-6 text-text-primary">{contactConfig.formTitle}</h2>
               <form className="flex flex-col gap-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="name" className="text-sm font-bold text-text-primary">이름</label>
-                    <input type="text" id="name" placeholder="홍길동" className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="phone" className="text-sm font-bold text-text-primary">연락처</label>
-                    <input type="tel" id="phone" placeholder="010-1234-5678" className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" />
-                  </div>
+                
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="name" className="text-sm font-bold text-text-primary">이름</label>
+                  <input type="text" id="name" placeholder="홍길동" className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" />
                 </div>
                 
                 <div className="flex flex-col gap-2">

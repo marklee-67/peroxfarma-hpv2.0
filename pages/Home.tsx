@@ -7,9 +7,9 @@ const Home: React.FC = () => {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="w-full bg-primary/95 text-white">
-        <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-center gap-10 px-4 py-24 text-center sm:py-32">
-          <ScrollAnimationWrapper className="flex flex-col gap-8">
+      <section className="relative w-full h-[500px] bg-primary/95 text-white">
+        <div className="mx-auto flex h-full max-w-[1200px] flex-col items-center justify-center gap-8 px-4 text-center">
+          <ScrollAnimationWrapper className="flex flex-col gap-6">
             <h1 className="text-7xl font-black leading-tight tracking-tight md:text-8xl">
               과학으로 설계하는<br />당신만의 건강 솔루션
             </h1>

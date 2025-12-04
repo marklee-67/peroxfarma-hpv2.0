@@ -15,7 +15,9 @@ const Admin: React.FC = () => {
     aboutConfig,
     updateAboutConfig,
     productsConfig,
-    updateProductsConfig
+    updateProductsConfig,
+    contactConfig,
+    updateContactConfig
   } = useProducts();
   
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -25,8 +27,8 @@ const Admin: React.FC = () => {
   const [loginId, setLoginId] = useState('');
   const [loginPw, setLoginPw] = useState('');
 
-  // Tab state: 'products' | 'terms' | 'privacy' | 'shop' | 'about'
-  const [activeTab, setActiveTab] = useState<'products' | 'terms' | 'privacy' | 'shop' | 'about'>('about');
+  // Tab state: 'products' | 'terms' | 'privacy' | 'shop' | 'about' | 'contact'
+  const [activeTab, setActiveTab] = useState<'products' | 'terms' | 'privacy' | 'shop' | 'about' | 'contact'>('about');
 
   // Policy edit state
   const [tempTerms, setTempTerms] = useState('');
@@ -51,6 +53,13 @@ const Admin: React.FC = () => {
     mainImageUrl: ''
   });
 
+  // Contact config edit state
+  const [tempContactConfig, setTempContactConfig] = useState({
+    pageTitle: '',
+    pageSubtitle: '',
+    formTitle: ''
+  });
+
   useEffect(() => {
     setTempTerms(termsContent);
     setTempPrivacy(privacyContent);
@@ -67,6 +76,10 @@ const Admin: React.FC = () => {
   useEffect(() => {
     setTempProductsConfig(productsConfig);
   }, [productsConfig]);
+
+  useEffect(() => {
+    setTempContactConfig(contactConfig);
+  }, [contactConfig]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -138,6 +151,17 @@ const Admin: React.FC = () => {
   const handleProductsConfigChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setTempProductsConfig(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSaveContactConfig = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateContactConfig(tempContactConfig);
+    alert('문의하기 정보가 저장되었습니다.');
+  };
+
+  const handleContactConfigChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setTempContactConfig(prev => ({ ...prev, [name]: value }));
   };
 
   if (!isAuthenticated) {
@@ -215,6 +239,12 @@ const Admin: React.FC = () => {
             className={`px-6 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'shop' ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:text-text-primary'}`}
           >
             쇼핑몰 관리
+          </button>
+          <button
+            onClick={() => setActiveTab('contact')}
+            className={`px-6 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'contact' ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:text-text-primary'}`}
+          >
+            문의하기 관리
           </button>
           <button
             onClick={() => setActiveTab('terms')}
@@ -442,6 +472,52 @@ const Admin: React.FC = () => {
                   placeholder="쇼핑몰 메인 화면에 표시될 설명 문구를 입력하세요."
                   className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
                 />
+              </div>
+              <div className="flex justify-end pt-4">
+                <button
+                  type="submit"
+                  className="bg-primary text-white font-bold py-2 px-6 rounded-lg hover:bg-primary/90 transition-colors shadow-sm"
+                >
+                  저장
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {/* Contact Management Tab */}
+        {activeTab === 'contact' && (
+          <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+            <h2 className="text-xl font-bold mb-6 text-text-primary">문의하기 페이지 수정</h2>
+            <form onSubmit={handleSaveContactConfig} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                  <label className="block text-sm font-bold text-text-primary mb-2">페이지 제목</label>
+                  <input
+                    name="pageTitle"
+                    value={tempContactConfig.pageTitle}
+                    onChange={handleContactConfigChange}
+                    className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-text-primary mb-2">서브 제목</label>
+                  <input
+                    name="pageSubtitle"
+                    value={tempContactConfig.pageSubtitle}
+                    onChange={handleContactConfigChange}
+                    className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-text-primary mb-2">문의 폼 제목</label>
+                  <input
+                    name="formTitle"
+                    value={tempContactConfig.formTitle}
+                    onChange={handleContactConfigChange}
+                    className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                  />
+                </div>
               </div>
               <div className="flex justify-end pt-4">
                 <button
