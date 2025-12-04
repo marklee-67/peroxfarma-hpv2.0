@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useProducts } from '../context/ProductContext';
+import ScrollAnimationWrapper from '../components/ScrollAnimationWrapper';
 
 const About: React.FC = () => {
   const { aboutConfig } = useProducts();
@@ -21,15 +22,27 @@ const About: React.FC = () => {
 
   return (
     <div className="w-full bg-background-light">
-      {/* Intro */}
-      <div className="mx-auto max-w-[1200px] px-4 py-16">
-        <div className="mb-12">
-          <h1 className="text-4xl font-black tracking-tight text-text-primary mb-4">회사소개</h1>
-          <p className="text-lg text-text-secondary max-w-2xl whitespace-pre-line">
+      {/* Hero Section */}
+      <section className="relative w-full h-[500px]">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url('${aboutConfig.mainImageUrl}')` }}
+        >
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        <ScrollAnimationWrapper className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+          <h1 className="text-7xl md:text-8xl font-black text-white mb-8 tracking-tight">
+            회사소개
+          </h1>
+          <p className="text-3xl text-white/90 max-w-5xl whitespace-pre-line leading-relaxed">
             {aboutConfig.introText}
           </p>
-        </div>
+        </ScrollAnimationWrapper>
+      </section>
 
+      {/* Content */}
+      <div className="mx-auto max-w-[1200px] px-4 py-16">
+        
         {/* Navigation Tabs */}
         <div className="flex border-b border-gray-200 mb-16 gap-8 overflow-x-auto">
           <button 
@@ -95,17 +108,6 @@ const About: React.FC = () => {
               </div>
             ))}
           </div>
-        </section>
-
-        {/* Global Image */}
-        <section className="mb-20">
-            <div className="w-full h-80 rounded-xl overflow-hidden shadow-md">
-                <img 
-                    src={aboutConfig.mainImageUrl}
-                    alt="Research Lab" 
-                    className="w-full h-full object-cover"
-                />
-            </div>
         </section>
 
         {/* Organization Chart */}

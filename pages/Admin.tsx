@@ -13,7 +13,9 @@ const Admin: React.FC = () => {
     shopConfig,
     updateShopConfig,
     aboutConfig,
-    updateAboutConfig
+    updateAboutConfig,
+    productsConfig,
+    updateProductsConfig
   } = useProducts();
   
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -43,6 +45,12 @@ const Admin: React.FC = () => {
     mainImageUrl: ''
   });
 
+  // Products config edit state
+  const [tempProductsConfig, setTempProductsConfig] = useState({
+    introText: '',
+    mainImageUrl: ''
+  });
+
   useEffect(() => {
     setTempTerms(termsContent);
     setTempPrivacy(privacyContent);
@@ -55,6 +63,10 @@ const Admin: React.FC = () => {
   useEffect(() => {
     setTempAboutConfig(aboutConfig);
   }, [aboutConfig]);
+
+  useEffect(() => {
+    setTempProductsConfig(productsConfig);
+  }, [productsConfig]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,6 +127,17 @@ const Admin: React.FC = () => {
   const handleAboutConfigChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setTempAboutConfig(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSaveProductsConfig = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateProductsConfig(tempProductsConfig);
+    alert('제품소개 페이지 정보가 저장되었습니다.');
+  };
+
+  const handleProductsConfigChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setTempProductsConfig(prev => ({ ...prev, [name]: value }));
   };
 
   if (!isAuthenticated) {
@@ -252,10 +275,53 @@ const Admin: React.FC = () => {
 
         {/* Products Management Tab */}
         {activeTab === 'products' && (
-          <div>
+          <div className="space-y-8">
+            {/* Products Page Config */}
+            {!editingProduct && (
+              <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+                <h2 className="text-xl font-bold mb-6 text-text-primary">제품소개 페이지 설정</h2>
+                <form onSubmit={handleSaveProductsConfig} className="space-y-6">
+                   <div>
+                    <label className="block text-sm font-bold text-text-primary mb-2">소개글</label>
+                    <textarea
+                      name="introText"
+                      value={tempProductsConfig.introText}
+                      onChange={handleProductsConfigChange}
+                      rows={4}
+                      className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                    />
+                     <p className="text-xs text-text-secondary mt-1">줄바꿈을 포함하여 입력할 수 있습니다.</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-text-primary mb-2">메인 이미지 URL</label>
+                    <input
+                      name="mainImageUrl"
+                      value={tempProductsConfig.mainImageUrl}
+                      onChange={handleProductsConfigChange}
+                      className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                    />
+                    {tempProductsConfig.mainImageUrl && (
+                        <div className="mt-2">
+                            <p className="text-xs text-text-secondary mb-1">이미지 미리보기:</p>
+                            <img src={tempProductsConfig.mainImageUrl} alt="Preview" className="h-40 w-full object-cover rounded-md border border-gray-200" />
+                        </div>
+                    )}
+                  </div>
+                  <div className="flex justify-end pt-4">
+                    <button
+                      type="submit"
+                      className="bg-primary text-white font-bold py-2 px-6 rounded-lg hover:bg-primary/90 transition-colors shadow-sm"
+                    >
+                      설정 저장
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+
             {editingProduct ? (
               <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
-                <h2 className="text-xl font-bold mb-6 text-text-primary">제품 수정</h2>
+                <h2 className="text-xl font-bold mb-6 text-text-primary">제품 상세 정보 수정</h2>
                 <form onSubmit={handleSaveProduct} className="space-y-6">
                   <div>
                     <label className="block text-sm font-bold text-text-primary mb-2">제품명</label>
@@ -319,6 +385,7 @@ const Admin: React.FC = () => {
               </div>
             ) : (
               <div className="grid gap-6">
+                <h3 className="text-lg font-bold text-text-primary">제품 목록</h3>
                 {products.map(product => (
                   <div key={product.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col md:flex-row gap-6 items-center">
                     <img src={product.img} alt={product.title} className="w-24 h-24 object-cover rounded-lg bg-gray-100 border border-gray-100" />

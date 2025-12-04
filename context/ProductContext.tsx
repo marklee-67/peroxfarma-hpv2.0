@@ -20,6 +20,11 @@ export interface AboutConfig {
   mainImageUrl: string;
 }
 
+export interface ProductsConfig {
+  introText: string;
+  mainImageUrl: string;
+}
+
 interface ProductContextType {
   products: Product[];
   updateProduct: (updatedProduct: Product) => void;
@@ -31,6 +36,8 @@ interface ProductContextType {
   updateShopConfig: (config: ShopConfig) => void;
   aboutConfig: AboutConfig;
   updateAboutConfig: (config: AboutConfig) => void;
+  productsConfig: ProductsConfig;
+  updateProductsConfig: (config: ProductsConfig) => void;
 }
 
 const defaultProducts: Product[] = [
@@ -100,6 +107,11 @@ const defaultAboutConfig: AboutConfig = {
   mainImageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDBLUyjmkyJn-APHbwtu0R53oayyYN9AMP3cQXabelXkoQ3z-QV3y4F5BCPJf9mEWtcwc2-cpPgZb37Hbw6rdFDGHfqoQ7chsgB8g6fQkV8MokoJyfJspBkRYUo6vR2yY4r_SWxzbJCmfdmqUTwe6Y6g3wsCX6aNiBTDFpmbU_O_m1Zi7bHkNeesfOExdIJUnpp6l4X_rjRBYR5F4bRPV0qNUvMPXGS7g4GRwmaLx9_EwAqcrloYw65zvYHSGtFTQMO-XFiQEaHB0A'
 };
 
+const defaultProductsConfig: ProductsConfig = {
+  introText: `당신의 건강 목표 달성을 도와줄 다양한 제품들을 만나보세요.\n모든 제품은 엄격한 품질 관리를 거쳐 생산됩니다.`,
+  mainImageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBGQKj5M3L-nPCNn_GKUV7yxZi9LjxuGkt-UZCWvyZQmDEsStLTTe2XQIksVsLdqAxVDNz5huWRKVjKS4x0E-SX6JOycGzlBQhK1rNKeCjEUsw1kdbvWZnprQVq3Nl9coS_-9ti6Ms-F_9136F4_d_t_RzmsJvcvoJhgISKnhoW3MmqKVcJaT71UST1tHrw_3KJ74KDd0qs-TFuzRxOWH3iuCwpjAEKMfpzKP89TUd2un-gEf624Z6oX4l7MFPUWH-vJJkVRo8aiI0'
+};
+
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -149,6 +161,15 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   });
 
+  const [productsConfig, setProductsConfig] = useState<ProductsConfig>(() => {
+    try {
+      const saved = localStorage.getItem('productsConfig');
+      return saved ? JSON.parse(saved) : defaultProductsConfig;
+    } catch (e) {
+      return defaultProductsConfig;
+    }
+  });
+
   useEffect(() => {
     localStorage.setItem('products', JSON.stringify(products));
   }, [products]);
@@ -168,6 +189,10 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
   useEffect(() => {
     localStorage.setItem('aboutConfig', JSON.stringify(aboutConfig));
   }, [aboutConfig]);
+
+  useEffect(() => {
+    localStorage.setItem('productsConfig', JSON.stringify(productsConfig));
+  }, [productsConfig]);
 
   const updateProduct = (updatedProduct: Product) => {
     setProducts(prev => prev.map(p => p.id === updatedProduct.id ? updatedProduct : p));
@@ -189,6 +214,10 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     setAboutConfig(config);
   };
 
+  const updateProductsConfig = (config: ProductsConfig) => {
+    setProductsConfig(config);
+  };
+
   return (
     <ProductContext.Provider value={{ 
       products, 
@@ -200,7 +229,9 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
       shopConfig,
       updateShopConfig,
       aboutConfig,
-      updateAboutConfig
+      updateAboutConfig,
+      productsConfig,
+      updateProductsConfig
     }}>
       {children}
     </ProductContext.Provider>

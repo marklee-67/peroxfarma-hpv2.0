@@ -1,5 +1,7 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ScrollAnimationWrapper from '../components/ScrollAnimationWrapper';
 
 const Facility: React.FC = () => {
   return (
@@ -12,12 +14,12 @@ const Facility: React.FC = () => {
         >
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
+        <ScrollAnimationWrapper className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+          <h1 className="text-7xl md:text-8xl font-black text-white mb-8 tracking-tight">
             최첨단 제조시설에서 탄생하는<br/>당신만의 영양제
           </h1>
-          <p className="text-lg text-white/90">엄격한 공정과 품질 관리 시스템으로 최고의 제품을 만듭니다.</p>
-        </div>
+          <p className="text-3xl text-white/90 max-w-5xl leading-relaxed">엄격한 공정과 품질 관리 시스템으로 최고의 제품을 만듭니다.</p>
+        </ScrollAnimationWrapper>
       </section>
 
       <div className="mx-auto max-w-[1200px] px-4 py-20">

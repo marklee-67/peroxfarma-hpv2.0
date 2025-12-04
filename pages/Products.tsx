@@ -2,21 +2,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
+import ScrollAnimationWrapper from '../components/ScrollAnimationWrapper';
 
 const Products: React.FC = () => {
-  const { products } = useProducts();
+  const { products, productsConfig } = useProducts();
 
   return (
     <div className="w-full">
       {/* Hero */}
-      <section className="bg-background-light py-20">
-        <div className="mx-auto max-w-[1200px] px-4 text-center">
-          <h1 className="text-4xl font-black text-text-primary mb-6">주요 제품 라인업</h1>
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-            당신의 건강 목표 달성을 도와줄 다양한 제품들을 만나보세요.<br/>
-            모든 제품은 엄격한 품질 관리를 거쳐 생산됩니다.
-          </p>
+      <section className="relative w-full h-[500px]">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url('${productsConfig.mainImageUrl}')` }}
+        >
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
+        <ScrollAnimationWrapper className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+          <h1 className="text-7xl md:text-8xl font-black text-white mb-8 tracking-tight">
+            제품소개
+          </h1>
+          <p className="text-3xl text-white/90 max-w-5xl whitespace-pre-line leading-relaxed">
+            {productsConfig.introText}
+          </p>
+        </ScrollAnimationWrapper>
       </section>
 
       {/* Product Grid */}

@@ -1,29 +1,31 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ScrollAnimationWrapper from '../components/ScrollAnimationWrapper';
 
 const Home: React.FC = () => {
   return (
     <div className="w-full">
       {/* Hero Section */}
       <section className="w-full bg-primary/95 text-white">
-        <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-center gap-8 px-4 py-24 text-center sm:py-32">
-          <div className="flex flex-col gap-6">
-            <h1 className="text-4xl font-black leading-tight tracking-tight md:text-6xl">
+        <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-center gap-10 px-4 py-24 text-center sm:py-32">
+          <ScrollAnimationWrapper className="flex flex-col gap-8">
+            <h1 className="text-7xl font-black leading-tight tracking-tight md:text-8xl">
               과학으로 설계하는<br />당신만의 건강 솔루션
             </h1>
-            <h2 className="text-lg font-medium text-white/90 md:text-xl">
+            <h2 className="text-3xl font-medium text-white/90 md:text-4xl leading-relaxed max-w-5xl mx-auto">
               전문가 상담으로 맞춤 솔루션을 받아보세요.<br/>
               과학적 분석을 통해 가장 적합한 제품만을 추천합니다.
             </h2>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/contact" className="flex h-12 min-w-[140px] items-center justify-center rounded-lg bg-secondary px-6 text-base font-bold text-white shadow-lg transition-transform hover:scale-105 hover:bg-secondary/90">
+          </ScrollAnimationWrapper>
+          <ScrollAnimationWrapper className="flex flex-wrap justify-center gap-6" style={{ animationDelay: '0.2s' }}>
+            <Link to="/contact" className="flex h-16 min-w-[180px] items-center justify-center rounded-lg bg-secondary px-8 text-xl font-bold text-white shadow-lg transition-transform hover:scale-105 hover:bg-secondary/90">
               상담 예약
             </Link>
-            <Link to="/products" className="flex h-12 min-w-[140px] items-center justify-center rounded-lg bg-white px-6 text-base font-bold text-primary shadow-lg transition-transform hover:scale-105 hover:bg-gray-50">
+            <Link to="/products" className="flex h-16 min-w-[180px] items-center justify-center rounded-lg bg-white px-8 text-xl font-bold text-primary shadow-lg transition-transform hover:scale-105 hover:bg-gray-50">
               서비스 시작하기
             </Link>
-          </div>
+          </ScrollAnimationWrapper>
         </div>
       </section>
 
