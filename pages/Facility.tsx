@@ -73,7 +73,7 @@ const Facility: React.FC = () => {
              <div className="flex-1 p-8 md:p-10 flex flex-col justify-center order-2 md:order-1">
                <h2 className="text-2xl md:text-3xl font-bold mb-6 text-text-primary">품질 및 안전 인증</h2>
                <p className="text-text-secondary mb-8 leading-relaxed break-keep">
-                 NutriPersonal은 국제 표준 규격을 준수하는 시설에서 제품을 생산합니다. 
+                 Peroxfarma Korea는 국제 표준 규격을 준수하는 시설에서 제품을 생산합니다. 
                  고객이 안심하고 섭취할 수 있도록 국내외 공신력 있는 기관의 인증을 획득했습니다.
                </p>
                <div className="flex gap-4 md:gap-6 justify-start">

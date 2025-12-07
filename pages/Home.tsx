@@ -176,7 +176,7 @@ const Home: React.FC = () => {
             <div className="text-center mb-16">
                 <ScrollAnimationWrapper animation="fade-in-up">
                     <h4 className="text-primary font-bold uppercase tracking-widest mb-2">핵심 가치</h4>
-                    <h2 className="text-4xl lg:text-5xl font-black text-navy">왜 NutriPersonal인가요?</h2>
+                    <h2 className="text-4xl lg:text-5xl font-black text-navy">왜 Peroxfarma Korea인가요?</h2>
                     <p className="text-gray-500 mt-4 max-w-2xl mx-auto break-keep">
                         단순히 영양제를 판매하는 것이 아닙니다. 우리는 당신의 건강한 삶을 지속하기 위한 통합 헬스케어 생태계를 제공합니다.
                     </p>
@@ -225,7 +225,7 @@ const Home: React.FC = () => {
             <ScrollAnimationWrapper animation="zoom-in">
                 <h2 className="text-3xl md:text-5xl font-black text-white mb-6 break-keep">건강한 변화, 지금 시작하세요</h2>
                 <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto break-keep">
-                    이미 수많은 회원분들이 NutriPersonal과 함께 더 활기찬 내일을 맞이하고 있습니다. 당신에게 꼭 맞는 건강 솔루션을 찾아보세요.
+                    이미 수많은 회원분들이 Peroxfarma Korea와 함께 더 활기찬 내일을 맞이하고 있습니다. 당신에게 꼭 맞는 건강 솔루션을 찾아보세요.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link to="/contact" className="px-10 py-4 bg-white text-primary font-black rounded-full shadow-xl hover:bg-gray-100 transition-colors">
