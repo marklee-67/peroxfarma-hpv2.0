@@ -10,6 +10,7 @@ export default {
       colors: {
         primary: "#00a897",
         secondary: "#FF6B6B",
+        navy: "#0B1120", // Deep dark blue for the hero section
         background: {
           light: "#F8F9FA",
           dark: "#0f2321",
@@ -22,6 +23,10 @@ export default {
       fontFamily: {
         sans: ["Manrope", "Noto Sans KR", "sans-serif"],
       },
+      borderRadius: {
+        '4xl': '2rem',
+        '5xl': '3rem',
+      }
     },
   },
   plugins: [],
