@@ -47,21 +47,21 @@ const Contact: React.FC = () => {
 
   return (
     <div className="w-full bg-background-light">
-      <div className="mx-auto max-w-[1200px] px-4 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div className="mx-auto max-w-[1200px] px-4 py-12 md:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
           
           {/* Left Column */}
-          <div className="lg:col-span-5 flex flex-col gap-12">
+          <div className="lg:col-span-5 flex flex-col gap-6 md:gap-12">
             <div>
-              <h1 className="text-4xl font-black text-text-primary mb-4">{contactConfig.pageTitle}</h1>
+              <h1 className="text-3xl md:text-4xl font-black text-text-primary mb-4 break-keep">{contactConfig.pageTitle}</h1>
               <p className="text-text-secondary">{contactConfig.pageSubtitle}</p>
             </div>
           </div>
 
           {/* Right Column: Form */}
           <div className="lg:col-span-7">
-            <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm">
-              <h2 className="text-2xl font-bold mb-6 text-text-primary">{contactConfig.formTitle}</h2>
+            <div className="bg-white p-6 md:p-8 rounded-xl border border-gray-200 shadow-sm">
+              <h2 className="text-xl md:text-2xl font-bold mb-6 text-text-primary">{contactConfig.formTitle}</h2>
               <form className="flex flex-col gap-6">
                 
                 <div className="flex flex-col gap-2">
@@ -72,7 +72,7 @@ const Contact: React.FC = () => {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="홍길동" 
-                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" 
+                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full" 
                   />
                 </div>
                 
@@ -84,7 +84,7 @@ const Contact: React.FC = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="hello@example.com" 
-                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" 
+                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full" 
                   />
                 </div>
 
@@ -96,7 +96,7 @@ const Contact: React.FC = () => {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="문의하실 내용을 자세하게 입력해주세요." 
-                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary resize-none"
+                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary resize-none w-full"
                   ></textarea>
                 </div>
 
@@ -106,9 +106,9 @@ const Contact: React.FC = () => {
                     id="agree" 
                     checked={formData.agree}
                     onChange={handleChange}
-                    className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary" 
+                    className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary flex-shrink-0" 
                   />
-                  <label htmlFor="agree" className="text-sm text-text-secondary cursor-pointer">개인정보 수집 및 이용에 동의합니다.</label>
+                  <label htmlFor="agree" className="text-sm text-text-secondary cursor-pointer break-keep">개인정보 수집 및 이용에 동의합니다.</label>
                 </div>
 
                 <button 

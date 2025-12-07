@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -26,15 +25,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="relative flex min-h-screen w-full flex-col font-sans">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-sm border-b border-gray-200">
+      <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-sm border-b border-gray-200">
         <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link to="/" className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center text-primary">
+          <Link to="/" className="flex items-center gap-2 md:gap-3 z-50">
+            <div className="flex h-8 w-8 items-center justify-center text-primary shrink-0">
               <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
                 <path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z" fill="currentColor"></path>
               </svg>
             </div>
-            <span className="text-xl font-bold tracking-tight text-text-primary">Peroxfarmakorea</span>
+            <span className="text-lg md:text-xl font-bold tracking-tight text-text-primary truncate">Peroxfarmakorea</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -65,46 +64,67 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-text-secondary"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 text-text-secondary z-50 focus:outline-none"
+            onClick={() => setIsMobileMenuOpen(true)}
+            aria-label="Open menu"
           >
-            <span className="material-symbols-outlined">menu</span>
+            <span className="material-symbols-outlined text-3xl">menu</span>
           </button>
         </div>
-
-        {/* Mobile Nav */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white shadow-lg">
-            <div className="flex flex-col p-4 gap-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`text-base px-3 py-2 rounded-lg transition-colors ${
-                     isActive(link.path) 
-                        ? 'text-primary bg-primary/10 font-bold' 
-                        : 'text-text-secondary font-medium hover:bg-gray-50'
-                  }`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <div className="h-px bg-gray-100 my-2"></div>
-              <Link
-                to="/shop"
-                className="text-base font-bold px-3 py-2 text-secondary hover:bg-secondary/5 rounded-lg transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                쇼핑몰
-              </Link>
-            </div>
-          </div>
-        )}
       </header>
 
+      {/* Mobile Nav Overlay */}
+      <div 
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden z-[60] ${
+          isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      ></div>
+
+      {/* Mobile Nav Menu */}
+      <div 
+        className={`fixed top-0 right-0 h-full w-[280px] bg-white shadow-2xl z-[70] transform transition-transform duration-300 md:hidden flex flex-col ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="flex items-center justify-between p-4 border-b border-gray-100">
+            <span className="font-bold text-lg text-text-primary">Menu</span>
+            <button 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2 text-text-secondary hover:text-primary transition-colors focus:outline-none"
+            >
+                <span className="material-symbols-outlined text-2xl">close</span>
+            </button>
+        </div>
+
+        <div className="flex flex-col gap-2 p-6 overflow-y-auto">
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`text-lg px-4 py-3 rounded-xl transition-colors ${
+                 isActive(link.path) 
+                    ? 'text-primary bg-primary/10 font-bold' 
+                    : 'text-text-secondary font-medium hover:bg-gray-50'
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.name}
+            </Link>
+          ))}
+          <div className="h-px bg-gray-100 my-4"></div>
+          <Link
+            to="/shop"
+            className="text-lg font-bold px-4 py-3 text-white bg-secondary hover:bg-secondary/90 rounded-xl transition-colors text-center shadow-md"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            쇼핑몰 바로가기
+          </Link>
+        </div>
+      </div>
+
       {/* Main Content */}
-      <main className="flex-grow">
+      <main className="flex-grow w-full overflow-x-hidden">
         {children}
       </main>
 

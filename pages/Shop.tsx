@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useProducts } from '../context/ProductContext';
 import { Link } from 'react-router-dom';
@@ -41,14 +40,14 @@ const Shop: React.FC = () => {
       )}
 
       <div className="bg-white border-b border-gray-200">
-        <div className="mx-auto max-w-[1200px] px-4 py-16 text-center">
-          <h1 className="text-4xl font-black text-text-primary mb-4">{displayTitle}</h1>
-          <p className="text-lg text-text-secondary whitespace-pre-line">
+        <div className="mx-auto max-w-[1200px] px-4 py-12 md:py-16 text-center">
+          <h1 className="text-3xl md:text-4xl font-black text-text-primary mb-4 break-keep">{displayTitle}</h1>
+          <p className="text-base md:text-lg text-text-secondary whitespace-pre-line break-keep leading-relaxed">
             {displayDesc}
           </p>
           {shopConfig.url && (
              <div className="mt-6">
-                <a href={shopConfig.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-white font-bold rounded-lg hover:bg-secondary/90 transition-colors">
+                <a href={shopConfig.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-white font-bold rounded-lg hover:bg-secondary/90 transition-colors w-full sm:w-auto justify-center">
                     쇼핑몰 바로가기
                     <span className="material-symbols-outlined text-sm">open_in_new</span>
                 </a>
@@ -57,8 +56,8 @@ const Shop: React.FC = () => {
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1200px] px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="mx-auto max-w-[1200px] px-4 py-12 md:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {products.map((product) => (
             <div key={product.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all flex flex-col h-full">
               <div className="aspect-square bg-gray-50 relative group">
@@ -69,8 +68,8 @@ const Shop: React.FC = () => {
                 <div className="mb-2">
                     <span className="text-xs font-bold text-secondary bg-secondary/10 px-2 py-1 rounded-full">{product.tag}</span>
                 </div>
-                <h3 className="text-lg font-bold text-text-primary mb-2 line-clamp-2">{product.title}</h3>
-                <p className="text-sm text-text-secondary mb-6 line-clamp-2 flex-1">{product.desc}</p>
+                <h3 className="text-lg font-bold text-text-primary mb-2 line-clamp-2 break-keep">{product.title}</h3>
+                <p className="text-sm text-text-secondary mb-6 line-clamp-2 flex-1 break-keep">{product.desc}</p>
                 
                 <div className="mt-auto space-y-3">
                     <div className="flex items-center justify-between">
@@ -95,10 +94,10 @@ const Shop: React.FC = () => {
           ))}
         </div>
         
-        <div className="mt-20 bg-primary/5 rounded-2xl p-10 text-center">
-            <h2 className="text-2xl font-bold text-text-primary mb-4">대량 구매 및 기업 제휴 문의</h2>
-            <p className="text-text-secondary mb-8">임직원 선물용 또는 대량 구매가 필요하신가요? 특별한 혜택을 확인해보세요.</p>
-            <Link to="/contact" className="inline-block px-8 py-3 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-white transition-colors">
+        <div className="mt-12 md:mt-20 bg-primary/5 rounded-2xl p-6 md:p-10 text-center">
+            <h2 className="text-xl md:text-2xl font-bold text-text-primary mb-4 break-keep">대량 구매 및 기업 제휴 문의</h2>
+            <p className="text-sm md:text-base text-text-secondary mb-8 break-keep">임직원 선물용 또는 대량 구매가 필요하신가요? 특별한 혜택을 확인해보세요.</p>
+            <Link to="/contact" className="inline-block px-8 py-3 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-white transition-colors w-full sm:w-auto">
                 제휴 문의하기
             </Link>
         </div>
