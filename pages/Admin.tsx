@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useProducts, Product } from '../context/ProductContext';
 
@@ -17,7 +16,11 @@ const Admin: React.FC = () => {
     productsConfig,
     updateProductsConfig,
     contactConfig,
-    updateContactConfig
+    updateContactConfig,
+    adminCredentials,
+    updateAdminCredentials,
+    inquiries,
+    deleteInquiry
   } = useProducts();
   
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -27,8 +30,8 @@ const Admin: React.FC = () => {
   const [loginId, setLoginId] = useState('');
   const [loginPw, setLoginPw] = useState('');
 
-  // Tab state: 'products' | 'terms' | 'privacy' | 'shop' | 'about' | 'contact'
-  const [activeTab, setActiveTab] = useState<'products' | 'terms' | 'privacy' | 'shop' | 'about' | 'contact'>('about');
+  // Tab state
+  const [activeTab, setActiveTab] = useState<'products' | 'terms' | 'privacy' | 'shop' | 'about' | 'contact' | 'settings'>('about');
 
   // Policy edit state
   const [tempTerms, setTempTerms] = useState('');
@@ -59,6 +62,12 @@ const Admin: React.FC = () => {
     pageSubtitle: '',
     formTitle: ''
   });
+  
+  // Admin creds edit state
+  const [tempCreds, setTempCreds] = useState({
+    id: '',
+    pw: ''
+  });
 
   useEffect(() => {
     setTempTerms(termsContent);
@@ -80,10 +89,14 @@ const Admin: React.FC = () => {
   useEffect(() => {
     setTempContactConfig(contactConfig);
   }, [contactConfig]);
+  
+  useEffect(() => {
+    setTempCreds(adminCredentials);
+  }, [adminCredentials]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (loginId === 'admin' && loginPw === '1212') {
+    if (loginId === adminCredentials.id && loginPw === adminCredentials.pw) {
       setIsAuthenticated(true);
     } else {
       alert('아이디 또는 비밀번호가 일치하지 않습니다.');
@@ -162,6 +175,24 @@ const Admin: React.FC = () => {
   const handleContactConfigChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setTempContactConfig(prev => ({ ...prev, [name]: value }));
+  };
+  
+  const handleSaveCreds = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateAdminCredentials(tempCreds);
+    alert('관리자 계정 정보가 수정되었습니다. 다시 로그인해주세요.');
+    setIsAuthenticated(false);
+  };
+  
+  const handleCredsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setTempCreds(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleDeleteInquiry = (id: number) => {
+    if (confirm('정말로 이 문의 내역을 삭제하시겠습니까?')) {
+      deleteInquiry(id);
+    }
   };
 
   if (!isAuthenticated) {
@@ -257,6 +288,12 @@ const Admin: React.FC = () => {
             className={`px-6 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'privacy' ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:text-text-primary'}`}
           >
             개인정보처리방침
+          </button>
+          <button
+            onClick={() => setActiveTab('settings')}
+            className={`px-6 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === 'settings' ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:text-text-primary'}`}
+          >
+            설정
           </button>
         </div>
         
@@ -487,47 +524,98 @@ const Admin: React.FC = () => {
 
         {/* Contact Management Tab */}
         {activeTab === 'contact' && (
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
-            <h2 className="text-xl font-bold mb-6 text-text-primary">문의하기 페이지 수정</h2>
-            <form onSubmit={handleSaveContactConfig} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <label className="block text-sm font-bold text-text-primary mb-2">페이지 제목</label>
-                  <input
-                    name="pageTitle"
-                    value={tempContactConfig.pageTitle}
-                    onChange={handleContactConfigChange}
-                    className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
-                  />
+          <div className="space-y-8">
+            <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+              <h2 className="text-xl font-bold mb-6 text-text-primary">문의하기 페이지 설정</h2>
+              <form onSubmit={handleSaveContactConfig} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div>
+                    <label className="block text-sm font-bold text-text-primary mb-2">페이지 제목</label>
+                    <input
+                      name="pageTitle"
+                      value={tempContactConfig.pageTitle}
+                      onChange={handleContactConfigChange}
+                      className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-text-primary mb-2">서브 제목</label>
+                    <input
+                      name="pageSubtitle"
+                      value={tempContactConfig.pageSubtitle}
+                      onChange={handleContactConfigChange}
+                      className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-text-primary mb-2">문의 폼 제목</label>
+                    <input
+                      name="formTitle"
+                      value={tempContactConfig.formTitle}
+                      onChange={handleContactConfigChange}
+                      className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-text-primary mb-2">서브 제목</label>
-                  <input
-                    name="pageSubtitle"
-                    value={tempContactConfig.pageSubtitle}
-                    onChange={handleContactConfigChange}
-                    className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
-                  />
+                <div className="flex justify-end pt-4">
+                  <button
+                    type="submit"
+                    className="bg-primary text-white font-bold py-2 px-6 rounded-lg hover:bg-primary/90 transition-colors shadow-sm"
+                  >
+                    저장
+                  </button>
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-text-primary mb-2">문의 폼 제목</label>
-                  <input
-                    name="formTitle"
-                    value={tempContactConfig.formTitle}
-                    onChange={handleContactConfigChange}
-                    className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
-                  />
+              </form>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+              <h2 className="text-xl font-bold mb-6 text-text-primary">접수된 문의 내역 ({inquiries.length})</h2>
+              {inquiries.length === 0 ? (
+                <div className="text-center text-text-secondary py-8">
+                  접수된 문의가 없습니다.
                 </div>
-              </div>
-              <div className="flex justify-end pt-4">
-                <button
-                  type="submit"
-                  className="bg-primary text-white font-bold py-2 px-6 rounded-lg hover:bg-primary/90 transition-colors shadow-sm"
-                >
-                  저장
-                </button>
-              </div>
-            </form>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="py-4 px-4 font-bold text-text-primary w-24">날짜</th>
+                        <th className="py-4 px-4 font-bold text-text-primary w-32">이름</th>
+                        <th className="py-4 px-4 font-bold text-text-primary w-48">이메일</th>
+                        <th className="py-4 px-4 font-bold text-text-primary">내용</th>
+                        <th className="py-4 px-4 font-bold text-text-primary w-20">관리</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {inquiries.map(inquiry => (
+                        <tr key={inquiry.id} className="border-b border-gray-100 hover:bg-gray-50">
+                          <td className="py-4 px-4 text-sm text-text-secondary whitespace-nowrap">
+                            {new Date(inquiry.date).toLocaleDateString()}
+                          </td>
+                          <td className="py-4 px-4 text-sm font-medium text-text-primary">
+                            {inquiry.name}
+                          </td>
+                          <td className="py-4 px-4 text-sm text-text-secondary">
+                            {inquiry.email}
+                          </td>
+                          <td className="py-4 px-4 text-sm text-text-secondary">
+                            {inquiry.message}
+                          </td>
+                          <td className="py-4 px-4">
+                            <button 
+                              onClick={() => handleDeleteInquiry(inquiry.id)}
+                              className="text-red-500 hover:text-red-700 text-sm font-bold"
+                            >
+                              삭제
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
@@ -580,6 +668,42 @@ const Admin: React.FC = () => {
                 </button>
               </div>
             </div>
+          </div>
+        )}
+        
+        {/* Settings Tab */}
+        {activeTab === 'settings' && (
+          <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+            <h2 className="text-xl font-bold mb-6 text-text-primary">관리자 계정 설정</h2>
+            <form onSubmit={handleSaveCreds} className="space-y-6 max-w-md">
+              <div>
+                <label className="block text-sm font-bold text-text-primary mb-2">관리자 아이디</label>
+                <input
+                  name="id"
+                  value={tempCreds.id}
+                  onChange={handleCredsChange}
+                  className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-text-primary mb-2">관리자 비밀번호</label>
+                <input
+                  name="pw"
+                  type="password"
+                  value={tempCreds.pw}
+                  onChange={handleCredsChange}
+                  className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                />
+              </div>
+              <div className="flex justify-end pt-4">
+                <button
+                  type="submit"
+                  className="bg-primary text-white font-bold py-2 px-6 rounded-lg hover:bg-primary/90 transition-colors shadow-sm"
+                >
+                  변경사항 저장
+                </button>
+              </div>
+            </form>
           </div>
         )}
       </div>

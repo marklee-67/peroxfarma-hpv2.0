@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 
 export interface Product {
@@ -31,6 +30,19 @@ export interface ContactConfig {
   formTitle: string;
 }
 
+export interface AdminCredentials {
+  id: string;
+  pw: string;
+}
+
+export interface Inquiry {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
+  date: string;
+}
+
 interface ProductContextType {
   products: Product[];
   updateProduct: (updatedProduct: Product) => void;
@@ -46,6 +58,12 @@ interface ProductContextType {
   updateProductsConfig: (config: ProductsConfig) => void;
   contactConfig: ContactConfig;
   updateContactConfig: (config: ContactConfig) => void;
+  // New features
+  adminCredentials: AdminCredentials;
+  updateAdminCredentials: (creds: AdminCredentials) => void;
+  inquiries: Inquiry[];
+  addInquiry: (inquiry: Omit<Inquiry, 'id' | 'date'>) => void;
+  deleteInquiry: (id: number) => void;
 }
 
 const defaultProducts: Product[] = [
@@ -193,6 +211,27 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   });
 
+  // Admin Credentials State
+  const [adminCredentials, setAdminCredentials] = useState<AdminCredentials>(() => {
+    try {
+      const saved = localStorage.getItem('adminCredentials');
+      return saved ? JSON.parse(saved) : { id: 'admin', pw: '1212' };
+    } catch (e) {
+      return { id: 'admin', pw: '1212' };
+    }
+  });
+
+  // Inquiries State
+  const [inquiries, setInquiries] = useState<Inquiry[]>(() => {
+    try {
+      const saved = localStorage.getItem('inquiries');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+
+  // Persistence Effects
   useEffect(() => {
     localStorage.setItem('products', JSON.stringify(products));
   }, [products]);
@@ -221,6 +260,15 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     localStorage.setItem('contactConfig', JSON.stringify(contactConfig));
   }, [contactConfig]);
 
+  useEffect(() => {
+    localStorage.setItem('adminCredentials', JSON.stringify(adminCredentials));
+  }, [adminCredentials]);
+
+  useEffect(() => {
+    localStorage.setItem('inquiries', JSON.stringify(inquiries));
+  }, [inquiries]);
+
+  // Methods
   const updateProduct = (updatedProduct: Product) => {
     setProducts(prev => prev.map(p => p.id === updatedProduct.id ? updatedProduct : p));
   };
@@ -249,6 +297,23 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     setContactConfig(config);
   };
 
+  const updateAdminCredentials = (creds: AdminCredentials) => {
+    setAdminCredentials(creds);
+  };
+
+  const addInquiry = (data: Omit<Inquiry, 'id' | 'date'>) => {
+    const newInquiry: Inquiry = {
+      ...data,
+      id: Date.now(),
+      date: new Date().toISOString()
+    };
+    setInquiries(prev => [newInquiry, ...prev]);
+  };
+
+  const deleteInquiry = (id: number) => {
+    setInquiries(prev => prev.filter(item => item.id !== id));
+  };
+
   return (
     <ProductContext.Provider value={{ 
       products, 
@@ -264,7 +329,12 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
       productsConfig,
       updateProductsConfig,
       contactConfig,
-      updateContactConfig
+      updateContactConfig,
+      adminCredentials,
+      updateAdminCredentials,
+      inquiries,
+      addInquiry,
+      deleteInquiry
     }}>
       {children}
     </ProductContext.Provider>
