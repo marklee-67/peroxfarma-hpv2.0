@@ -91,7 +91,7 @@ const About: React.FC = () => {
             {[
               { year: '2023', events: ['11월: 개인 맞춤형 구독 서비스 공식 런칭', '07월: 시리즈 A 투자 유치 (100억 원)', '02월: 자체 R&D 연구소 설립'] },
               { year: '2022', events: ['09월: 베타 서비스 오픈 및 사용자 1만 명 돌파', '03월: 시드 투자 유치'] },
-              { year: '2021', events: ['05월: NutriPersonal (Ferox Pharma Korea) 법인 설립'] }
+              { year: '2021', events: ['05월: Peroxfarma Korea 법인 설립'] }
             ].map((yearData, idx) => (
               <div key={idx} className="relative pl-8">
                 <div className="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full bg-primary border-4 border-white shadow-sm"></div>
