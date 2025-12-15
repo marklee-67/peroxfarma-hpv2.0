@@ -47,7 +47,7 @@ const Signup: React.FC = () => {
         <div className="text-center">
           <h2 className="text-3xl font-black tracking-tight text-text-primary">회원가입</h2>
           <p className="mt-2 text-sm text-text-secondary">
-            Peroxfarma와 함께 건강한 삶을 시작하세요.
+            IncareBio와 함께 건강한 삶을 시작하세요.
           </p>
         </div>
 

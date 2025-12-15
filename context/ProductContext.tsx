@@ -98,7 +98,7 @@ const defaultProducts: Product[] = [
 ];
 
 const defaultTerms = `제1조 (목적)
-본 약관은 Peroxfarma Korea(이하 "회사")가 제공하는 서비스의 이용조건 및 절차, 이용자와 회사의 권리, 의무, 책임사항을 규정함을 목적으로 합니다.
+본 약관은 IncareBio(이하 "회사")가 제공하는 서비스의 이용조건 및 절차, 이용자와 회사의 권리, 의무, 책임사항을 규정함을 목적으로 합니다.
 
 제2조 (용어의 정의)
 1. "서비스"란 회사가 제공하는 모든 건강기능식품 구독 및 관련 제반 서비스를 의미합니다.
@@ -109,7 +109,7 @@ const defaultTerms = `제1조 (목적)
 2. 회사는 합리적인 사유가 발생할 경우 관련 법령에 위배되지 않는 범위 내에서 본 약관을 개정할 수 있습니다.`;
 
 const defaultPrivacy = `1. 개인정보의 수집 및 이용 목적
-Peroxfarma Korea는 다음의 목적을 위해 개인정보를 수집 및 이용합니다.
+IncareBio는 다음의 목적을 위해 개인정보를 수집 및 이용합니다.
 - 서비스 제공 및 계약의 이행
 - 회원 관리 및 본인 확인
 - 고객 상담 및 불만 처리
@@ -129,7 +129,7 @@ const defaultShopConfig: ShopConfig = {
 };
 
 const defaultAboutConfig: AboutConfig = {
-  introText: `개인 맞춤형 건강기능식품의 미래를 선도하는 Peroxfarma Korea입니다.\n인류의 건강 증진이라는 단 하나의 목표를 가지고 설립되었습니다.`,
+  introText: `개인 맞춤형 건강기능식품의 미래를 선도하는 IncareBio입니다.\n인류의 건강 증진이라는 단 하나의 목표를 가지고 설립되었습니다.`,
   mainImageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDBLUyjmkyJn-APHbwtu0R53oayyYN9AMP3cQXabelXkoQ3z-QV3y4F5BCPJf9mEWtcwc2-cpPgZb37Hbw6rdFDGHfqoQ7chsgB8g6fQkV8MokoJyfJspBkRYUo6vR2yY4r_SWxzbJCmfdmqUTwe6Y6g3wsCX6aNiBTDFpmbU_O_m1Zi7bHkNeesfOExdIJUnpp6l4X_rjRBYR5F4bRPV0qNUvMPXGS7g4GRwmaLx9_EwAqcrloYw65zvYHSGtFTQMO-XFiQEaHB0A'
 };
 

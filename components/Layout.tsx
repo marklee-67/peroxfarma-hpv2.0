@@ -47,8 +47,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <span className="material-symbols-outlined text-2xl">health_and_safety</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-white leading-none">Peroxfarma</span>
-              <span className="text-xs text-gray-400 font-medium tracking-widest">KOREA</span>
+              <span className="text-xl font-bold tracking-tight text-white leading-none">IncareBio</span>
             </div>
           </Link>
 
@@ -158,10 +157,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white shrink-0">
                    <span className="material-symbols-outlined text-2xl">health_and_safety</span>
                  </div>
-                <h3 className="text-xl font-bold text-white">Peroxfarma Korea</h3>
+                <h3 className="text-xl font-bold text-white">IncareBio</h3>
               </div>
               <p className="text-sm leading-relaxed text-gray-400">
-                과학적인 접근을 통한 개인 맞춤형 건강 솔루션. Peroxfarma Korea가 당신의 건강한 미래를 설계합니다.
+                과학적인 접근을 통한 개인 맞춤형 건강 솔루션. IncareBio가 당신의 건강한 미래를 설계합니다.
               </p>
             </div>
             
@@ -197,14 +196,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </div>
                 <div className="flex items-center gap-3">
                    <span className="material-symbols-outlined text-primary">mail</span>
-                   <span>contact@peroxfarma.co.kr</span>
+                   <span>contact@incarebio.co.kr</span>
                 </div>
               </div>
             </div>
           </div>
           
           <div className="border-t border-white/10 pt-8 text-center text-sm flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>© 2024 Peroxfarma Korea. All rights reserved.</p>
+            <p>© 2024 IncareBio. All rights reserved.</p>
             <div className="flex gap-4">
               <a href="#" className="h-10 w-10 flex items-center justify-center rounded-full bg-white/5 text-white hover:bg-primary hover:text-white transition-all">
                   <span className="material-symbols-outlined text-sm">public</span>

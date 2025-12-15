@@ -23,7 +23,7 @@ const Login: React.FC = () => {
           </div>
           <h2 className="text-3xl font-black tracking-tight text-text-primary">로그인</h2>
           <p className="mt-2 text-sm text-text-secondary">
-            Peroxfarma 계정으로 서비스를 이용해보세요.
+            IncareBio 계정으로 서비스를 이용해보세요.
           </p>
         </div>
         

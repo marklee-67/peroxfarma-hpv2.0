@@ -485,7 +485,7 @@ const Admin: React.FC = () => {
                   name="companyName"
                   value={tempShopConfig.companyName}
                   onChange={handleShopConfigChange}
-                  placeholder="예: Peroxfarma Store"
+                  placeholder="예: IncareBio Store"
                   className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
                 />
               </div>
@@ -495,7 +495,7 @@ const Admin: React.FC = () => {
                   name="url"
                   value={tempShopConfig.url}
                   onChange={handleShopConfigChange}
-                  placeholder="예: https://smartstore.naver.com/peroxfarma"
+                  placeholder="예: https://smartstore.naver.com/incarebio"
                   className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
                 />
               </div>

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useProducts } from '../context/ProductContext';
 import { Link } from 'react-router-dom';
@@ -23,7 +24,7 @@ const Shop: React.FC = () => {
   const displayTitle = shopConfig.companyName || '공식 온라인 스토어';
   const displayDesc = shopConfig.description || (
     <>
-      Peroxfarma의 프리미엄 건강기능식품을 만나보세요.<br/>
+      IncareBio의 프리미엄 건강기능식품을 만나보세요.<br/>
       정기 구독 시 최대 20% 할인 혜택을 드립니다.
     </>
   );
