@@ -72,7 +72,7 @@ const defaultProducts: Product[] = [
     tag: '#면역강화',
     title: '면역 기능 강화 라인',
     desc: '환절기, 지친 일상 속에서 건강을 지켜주는 필수 영양소 조합.',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAAUSGuNkcLKDXckEX1naMAEXe4sT4JO8wzkXf_looBH3fDhom7Z-d_cDi0SapXzr0BCqvFh9fw9WB3z1Sqn0yipbni3ElF7mUOMv-HqxG2wCe4SdI4_UKG1KlkdLGSbwurNcsFJp03gXTpbLrFcz2EzRh0EzZsrk10qf60zMqTz1Oas-t4VK00-xHdjgvbyg7kXpWm2bBa9BeJV23L3c9tv0mQUfS_mNmZLivxEB7etGHHD0lcZ98VlCWVqRzl0DyEzDh4XDmXp2s'
+    img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=2030&auto=format&fit=crop'
   },
   {
     id: 2,
