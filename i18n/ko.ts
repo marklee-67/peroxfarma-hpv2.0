@@ -132,6 +132,45 @@ export const KO_DATA = {
     successTitle: '제출이 완료되었습니다',
     successDesc: '문의하신 내용을 소중히 검토하여\n빠른 시일 내에 답변 드리겠습니다.'
   },
+  admin: {
+    sidebarTitle: 'Incare CMS',
+    loginTitle: 'CMS 로그인',
+    signOut: '로그아웃',
+    saveBtn: '업데이트 저장',
+    langLabel: '언어 버전',
+    tabs: {
+      home: '홈',
+      about: '회사 소개',
+      products: '제품소개',
+      facility: '시설관리',
+      contact: '문의하기',
+      terms: '약관/개인정보',
+      settings: '계정 설정'
+    },
+    labels: {
+      heroTitle: '히어로 타이틀',
+      heroDesc: '히어로 설명',
+      heroBadge: '히어로 배지',
+      heroImageUrl: '히어로 이미지 URL',
+      heroStartUrl: '시작하기 버튼 URL',
+      mainImageUrl: '메인 이미지 URL',
+      introText: '소개 텍스트',
+      serviceTitle: '서비스 섹션 제목',
+      serviceSubtitle: '서비스 섹션 소제목',
+      certTitle: '인증 제목',
+      certDesc: '인증 설명',
+      certImageUrl: '인증 이미지 URL',
+      inquiryDate: '날짜',
+      inquirySender: '발신자',
+      inquiryMsg: '메시지',
+      productTag: '태그',
+      productTitle: '제품명',
+      productDesc: '제품 설명',
+      productImg: '이미지 URL',
+      tos: '이용약관',
+      privacy: '개인정보처리방침'
+    }
+  },
   projectInfo: {
     title: '프로젝트 상세 정보',
     projectTable: [

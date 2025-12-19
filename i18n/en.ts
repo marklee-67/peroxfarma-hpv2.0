@@ -132,6 +132,45 @@ export const EN_DATA = {
     successTitle: 'Submission Complete',
     successDesc: 'We will carefully review your inquiry and get back to you as soon as possible.'
   },
+  admin: {
+    sidebarTitle: 'Incare CMS',
+    loginTitle: 'CMS Login',
+    signOut: 'Sign Out',
+    saveBtn: 'Save Updates',
+    langLabel: 'Lang Version',
+    tabs: {
+      home: 'Home',
+      about: 'About',
+      products: 'Products',
+      facility: 'Facility',
+      contact: 'Inquiries',
+      terms: 'Policies',
+      settings: 'Settings'
+    },
+    labels: {
+      heroTitle: 'Hero Title',
+      heroDesc: 'Hero Description',
+      heroBadge: 'Hero Badge',
+      heroImageUrl: 'Hero Image URL',
+      heroStartUrl: 'Start Button URL',
+      mainImageUrl: 'Main Image URL',
+      introText: 'Intro Text',
+      serviceTitle: 'Service Section Title',
+      serviceSubtitle: 'Service Section Subtitle',
+      certTitle: 'Cert Title',
+      certDesc: 'Cert Description',
+      certImageUrl: 'Cert Image URL',
+      inquiryDate: 'Date',
+      inquirySender: 'Sender',
+      inquiryMsg: 'Message',
+      productTag: 'Tag',
+      productTitle: 'Product Title',
+      productDesc: 'Description',
+      productImg: 'Image URL',
+      tos: 'Terms of Service',
+      privacy: 'Privacy Policy'
+    }
+  },
   projectInfo: {
     title: 'Project Specifications',
     projectTable: [
