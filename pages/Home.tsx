@@ -37,9 +37,15 @@ const Home: React.FC = () => {
               </ScrollAnimationWrapper>
 
               <ScrollAnimationWrapper className="flex flex-wrap gap-4" animation="fade-in-up" delay={0.3}>
-                <Link to="/products" className="h-14 px-10 flex items-center justify-center rounded-full bg-primary text-white font-bold text-lg hover:brightness-110 transition-all shadow-xl shadow-primary/20">
+                {/* External link to "a 프로젝트" on Vercel */}
+                <a 
+                  href="https://peroxfarma-hpv2-0-mbfy.vercel.app" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="h-14 px-10 flex items-center justify-center rounded-full bg-primary text-white font-bold text-lg hover:brightness-110 transition-all shadow-xl shadow-primary/20"
+                >
                   시작하기
-                </Link>
+                </a>
                 <Link to="/contact" className="h-14 px-10 flex items-center justify-center rounded-full border-2 border-white/20 text-white font-bold text-lg hover:bg-white/5 transition-all">
                   상담 신청
                 </Link>
