@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useProducts } from '../context/ProductContext';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const { lang, setLang, t } = useProducts();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLangOpen, setIsLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const isHome = location.pathname === '/';
 
@@ -19,12 +24,22 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(event.target as Node)) {
+        setIsLangOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const navLinks = [
-    { name: '홈', path: '/' },
-    { name: '회사소개', path: '/about' },
-    { name: '제품소개', path: '/products' },
-    { name: '시설안내', path: '/facility' },
-    { name: '문의하기', path: '/contact' },
+    { name: t.nav.home, path: '/' },
+    { name: t.nav.about, path: '/about' },
+    { name: t.nav.products, path: '/products' },
+    { name: t.nav.facility, path: '/facility' },
+    { name: t.nav.contact, path: '/contact' },
   ];
 
   const isActive = (path: string) => {
@@ -68,8 +83,38 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               to="/shop"
               className="rounded-full bg-secondary px-6 py-2.5 text-sm font-bold text-white transition-all hover:brightness-110 shadow-md"
             >
-              스토어
+              {t.nav.shop}
             </Link>
+
+            <div className="relative" ref={langRef}>
+              <button 
+                onClick={() => setIsLangOpen(!isLangOpen)}
+                className={`flex items-center gap-1 px-3 py-2 rounded-lg transition-all ${
+                  scrolled || !isHome ? 'text-slate-600 hover:bg-slate-100' : 'text-white/80 hover:bg-white/10'
+                }`}
+              >
+                <span className="material-symbols-outlined text-xl">language</span>
+                <span className="text-sm font-bold">{lang}</span>
+                <span className={`material-symbols-outlined text-sm transition-transform ${isLangOpen ? 'rotate-180' : ''}`}>expand_more</span>
+              </button>
+
+              {isLangOpen && (
+                <div className="absolute right-0 mt-2 w-32 bg-white rounded-xl shadow-xl border border-slate-100 py-2 animate-fade-in-up origin-top-right">
+                  <button 
+                    onClick={() => { setLang('KO'); setIsLangOpen(false); }}
+                    className={`w-full px-4 py-2 text-left text-sm font-bold flex items-center justify-between ${lang === 'KO' ? 'text-primary bg-primary/5' : 'text-slate-600 hover:bg-slate-50'}`}
+                  >
+                    한국어 {lang === 'KO' && <span className="material-symbols-outlined text-sm">check</span>}
+                  </button>
+                  <button 
+                    onClick={() => { setLang('EN'); setIsLangOpen(false); }}
+                    className={`w-full px-4 py-2 text-left text-sm font-bold flex items-center justify-between ${lang === 'EN' ? 'text-primary bg-primary/5' : 'text-slate-600 hover:bg-slate-50'}`}
+                  >
+                    English {lang === 'EN' && <span className="material-symbols-outlined text-sm">check</span>}
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           <button
@@ -93,7 +138,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <span className="material-symbols-outlined text-3xl">close</span>
           </button>
         </div>
-        <nav className="flex flex-col p-8 gap-6">
+        <nav className="flex flex-col p-8 gap-6 flex-1">
           {navLinks.map((link) => (
             <Link
               key={link.path}
@@ -109,9 +154,27 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             className="mt-4 w-full py-4 bg-secondary text-white text-center font-bold rounded-xl"
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            스토어 바로가기
+            {t.nav.shop}
           </Link>
         </nav>
+
+        <div className="p-8 border-t border-white/10 flex items-center justify-between">
+          <span className="text-white/50 text-sm font-bold">LANGUAGE</span>
+          <div className="flex bg-white/5 rounded-lg p-1">
+            <button 
+              onClick={() => setLang('KO')}
+              className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${lang === 'KO' ? 'bg-primary text-white shadow-lg' : 'text-white/40'}`}
+            >
+              KO
+            </button>
+            <button 
+              onClick={() => setLang('EN')}
+              className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${lang === 'EN' ? 'bg-primary text-white shadow-lg' : 'text-white/40'}`}
+            >
+              EN
+            </button>
+          </div>
+        </div>
       </div>
 
       <main className="flex-grow pt-0">
@@ -128,38 +191,41 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </div>
                 <h3 className="text-xl font-bold text-white">IncareBio</h3>
               </div>
-              <p className="text-sm leading-relaxed">
-                과학적 데이터와 AI 기술을 결합하여<br/>당신만을 위한 정밀 건강 관리를 제공합니다.
+              <p className="text-sm leading-relaxed whitespace-pre-line">
+                {t.footer.desc}
               </p>
             </div>
             <div>
-              <h4 className="font-bold text-white mb-6">서비스</h4>
+              <h4 className="font-bold text-white mb-6">{t.footer.services}</h4>
               <ul className="space-y-4 text-sm">
-                <li><Link to="/about">회사소개</Link></li>
-                <li><Link to="/products">제품소개</Link></li>
-                <li><Link to="/facility">시설안내</Link></li>
+                <li><Link to="/about">{t.nav.about}</Link></li>
+                <li><Link to="/products">{t.nav.products}</Link></li>
+                <li><Link to="/facility">{t.nav.facility}</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold text-white mb-6">고객센터</h4>
+              <h4 className="font-bold text-white mb-6">{t.footer.support}</h4>
               <div className="text-sm space-y-2">
                 <p className="text-lg font-bold text-white">1588-1234</p>
-                <p>평일 09:00 ~ 18:00 (주말 공휴일 휴무)</p>
+                <p>09:00 ~ 18:00</p>
                 <p>contact@incarebio.co.kr</p>
               </div>
             </div>
             <div>
-              <h4 className="font-bold text-white mb-6">주소</h4>
-              <p className="text-sm leading-relaxed">
-                서울특별시 강남구 테헤란로 123<br/>인케어바이오 빌딩 7층
+              <h4 className="font-bold text-white mb-6">{t.footer.address_title}</h4>
+              <p className="text-sm leading-relaxed whitespace-pre-line">
+                {t.footer.address}
               </p>
             </div>
           </div>
           <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-            <p>© 2024 IncareBio. All rights reserved.</p>
+            <div className="flex items-center gap-4">
+              <p>© 2024 IncareBio. All rights reserved.</p>
+            </div>
             <div className="flex gap-6">
-              <Link to="/terms">이용약관</Link>
-              <Link to="/privacy" className="font-bold text-white">개인정보처리방침</Link>
+              <Link to="/terms" className="hover:text-white transition-colors">{t.footer.terms}</Link>
+              <Link to="/privacy" className="font-bold text-white hover:text-white transition-colors">{t.footer.privacy}</Link>
+              <Link to="/admin" className="hover:text-white transition-colors">{t.footer.admin}</Link>
             </div>
           </div>
         </div>

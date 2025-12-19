@@ -15,6 +15,65 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
       rel="stylesheet"
     />
+    <!-- Tailwind Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: "#85ABD5", // Sky Blue from image
+                dark: "#6A8EB8",
+                light: "#E7F0F9",
+                deep: "#4D76A5"
+              },
+              secondary: {
+                DEFAULT: "#C64A47", // Reddish from image
+                dark: "#A33D3A",
+                light: "#F9EAEA"
+              },
+              navy: {
+                900: "#0F1B2C",
+                800: "#1A2F4B", // Richer dark blue matching the theme
+                700: "#24426A",
+                DEFAULT: "#1A2F4B"
+              },
+              background: {
+                light: "#F4F7FA" // Soft blue-tinted white
+              }
+            },
+            fontFamily: {
+              sans: ["Manrope", "Noto Sans KR", "sans-serif"],
+            }
+          }
+        }
+      }
+    </script>
+    <style type="text/css">
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .image-mask-blob {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
+      .animate-fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      .animate-float { animation: float 3s ease-in-out infinite; }
+      
+      /* Hide scrollbar but keep functionality */
+      .scrollbar-hide::-webkit-scrollbar { display: none; }
+      .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+      body { background-color: #F4F7FA; }
+    </style>
   <script type="importmap">
 {
   "imports": {
@@ -28,9 +87,8 @@
 }
 </script>
 </head>
-  <body class="bg-gray-50 text-slate-900 antialiased">
+  <body class="text-slate-900 antialiased">
     <div id="root"></div>
-    <!-- Vite transpiles this TSX file for the browser -->
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>

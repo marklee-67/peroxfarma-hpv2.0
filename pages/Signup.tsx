@@ -1,8 +1,9 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useProducts } from '../context/ProductContext';
 
 const Signup: React.FC = () => {
+  const { t } = useProducts();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -21,23 +22,21 @@ const Signup: React.FC = () => {
   };
 
   const handleGoogleSignup = () => {
-    // Mock Google Sign Up
-    alert('구글 계정으로 회원가입을 진행합니다.');
+    alert(t.auth.googleBtn);
     navigate('/');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      alert('비밀번호가 일치하지 않습니다.');
+      alert(t.auth.errorMatch);
       return;
     }
     if (!formData.agreed) {
-        alert('이용약관에 동의해주세요.');
+        alert(t.auth.errorTerms);
         return;
     }
-    // Mock Signup
-    alert('회원가입이 완료되었습니다.');
+    alert(t.auth.successSignup);
     navigate('/login');
   };
 
@@ -45,9 +44,9 @@ const Signup: React.FC = () => {
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-lg border border-gray-100">
         <div className="text-center">
-          <h2 className="text-3xl font-black tracking-tight text-text-primary">회원가입</h2>
+          <h2 className="text-3xl font-black tracking-tight text-text-primary">{t.auth.signupTitle}</h2>
           <p className="mt-2 text-sm text-text-secondary">
-            IncareBio와 함께 건강한 삶을 시작하세요.
+            {t.auth.signupDesc}
           </p>
         </div>
 
@@ -75,7 +74,7 @@ const Signup: React.FC = () => {
                         fill="#EA4335"
                     />
                 </svg>
-                구글로 시작하기
+                {t.auth.googleBtn}
             </button>
         </div>
 
@@ -84,27 +83,27 @@ const Signup: React.FC = () => {
                 <div className="w-full border-t border-gray-200"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-                <span className="bg-white px-2 text-text-secondary">또는 이메일로 가입</span>
+                <span className="bg-white px-2 text-text-secondary">{t.auth.emailSignup}</span>
             </div>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-bold text-text-primary mb-1">이름</label>
+              <label htmlFor="name" className="block text-sm font-bold text-text-primary mb-1">{t.auth.name}</label>
               <input
                 id="name"
                 name="name"
                 type="text"
                 required
                 className="block w-full rounded-lg border border-gray-300 px-3 py-3 text-text-primary placeholder-gray-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
-                placeholder="홍길동"
+                placeholder={t.auth.namePlaceholder}
                 value={formData.name}
                 onChange={handleChange}
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-bold text-text-primary mb-1">이메일 주소</label>
+              <label htmlFor="email" className="block text-sm font-bold text-text-primary mb-1">{t.auth.email}</label>
               <input
                 id="email"
                 name="email"
@@ -117,27 +116,27 @@ const Signup: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-bold text-text-primary mb-1">비밀번호</label>
+              <label htmlFor="password" className="block text-sm font-bold text-text-primary mb-1">{t.auth.pw}</label>
               <input
                 id="password"
                 name="password"
                 type="password"
                 required
                 className="block w-full rounded-lg border border-gray-300 px-3 py-3 text-text-primary placeholder-gray-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
-                placeholder="8자 이상 입력해주세요"
+                placeholder="8+ characters"
                 value={formData.password}
                 onChange={handleChange}
               />
             </div>
              <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-bold text-text-primary mb-1">비밀번호 확인</label>
+              <label htmlFor="confirmPassword" className="block text-sm font-bold text-text-primary mb-1">{t.auth.pwConfirm}</label>
               <input
                 id="confirmPassword"
                 name="confirmPassword"
                 type="password"
                 required
                 className="block w-full rounded-lg border border-gray-300 px-3 py-3 text-text-primary placeholder-gray-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
-                placeholder="비밀번호를 한번 더 입력해주세요"
+                placeholder={t.auth.pwConfirmPlaceholder}
                 value={formData.confirmPassword}
                 onChange={handleChange}
               />
@@ -154,7 +153,7 @@ const Signup: React.FC = () => {
               onChange={handleChange}
             />
             <label htmlFor="agreed" className="ml-2 block text-sm text-text-secondary cursor-pointer select-none">
-              <a href="#" className="text-primary hover:underline">이용약관</a> 및 <a href="#" className="text-primary hover:underline">개인정보처리방침</a>에 동의합니다.
+              {t.auth.termsAgree}
             </label>
           </div>
 
@@ -162,15 +161,15 @@ const Signup: React.FC = () => {
             type="submit"
             className="flex w-full justify-center rounded-lg bg-primary px-4 py-3 text-sm font-bold text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-md"
           >
-            가입하기
+            {t.auth.signupBtn}
           </button>
         </form>
 
         <div className="mt-6 text-center">
              <p className="text-sm text-text-secondary">
-                이미 계정이 있으신가요?{' '}
+                {t.auth.alreadyAccount}{' '}
                 <Link to="/login" className="font-medium text-primary hover:text-primary/80 transition-colors">
-                    로그인
+                    {t.auth.loginLink}
                 </Link>
             </p>
         </div>

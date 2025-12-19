@@ -4,7 +4,7 @@ import { useProducts } from '../context/ProductContext';
 import ScrollAnimationWrapper from '../components/ScrollAnimationWrapper';
 
 const Products: React.FC = () => {
-  const { products, productsConfig } = useProducts();
+  const { products, productsConfig, t } = useProducts();
 
   return (
     <div className="w-full">
@@ -20,8 +20,8 @@ const Products: React.FC = () => {
           className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4"
           animation="fade-in-up"
         >
-          <h1 className="text-4xl md:text-7xl lg:text-8xl font-black text-white mb-6 md:mb-8 tracking-tight">
-            제품소개
+          <h1 className="text-5xl md:text-7xl font-black text-white mb-6 md:mb-8 tracking-tight">
+            {t.products.heroTitle}
           </h1>
           <p className="text-lg md:text-3xl text-white/90 max-w-5xl whitespace-pre-line leading-relaxed">
             {productsConfig.introText}
@@ -43,11 +43,11 @@ const Products: React.FC = () => {
                  <img src={product.img} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                </div>
                <div className="p-6 flex-1">
-                 <span className="inline-block bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded-full mb-3">
+                 <span className="inline-block bg-secondary/10 text-secondary text-xs font-bold px-2 py-1 rounded-full mb-3">
                    {product.tag}
                  </span>
-                 <h3 className="text-lg font-bold text-text-primary mb-2 leading-tight break-keep">{product.title}</h3>
-                 <p className="text-sm text-text-secondary break-keep">{product.desc}</p>
+                 <h3 className="text-lg font-bold text-navy mb-2 leading-tight break-keep">{product.title}</h3>
+                 <p className="text-sm text-slate-500 break-keep">{product.desc}</p>
                </div>
              </ScrollAnimationWrapper>
            ))}
@@ -61,12 +61,12 @@ const Products: React.FC = () => {
           animation="zoom-in"
         >
           <div className="relative z-10">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 break-keep">이제 당신의 건강을 챙길 시간입니다</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 break-keep">{t.products.bannerTitle}</h2>
             <p className="text-white/90 mb-8 max-w-xl mx-auto text-sm md:text-base break-keep">
-              지금 바로 무료 건강 상담을 시작하고, 나에게 꼭 맞는 맞춤 영양제를 찾아보세요.
+              {t.products.bannerDesc}
             </p>
-            <Link to="/contact" className="inline-flex h-12 px-8 items-center justify-center rounded-full bg-white text-primary font-bold shadow-lg hover:bg-gray-50 transition-colors transform hover:scale-105 w-full sm:w-auto">
-              상담 신청하기
+            <Link to="/contact" className="inline-flex h-12 px-8 items-center justify-center rounded-full bg-secondary text-white font-bold shadow-lg hover:brightness-110 transition-colors transform hover:scale-105 w-full sm:w-auto">
+              {t.products.bannerBtn}
             </Link>
           </div>
           {/* Decorative Circle */}

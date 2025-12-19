@@ -8,16 +8,24 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#00a897", // IncareBio Signature Mint
-          dark: "#008a7d",
-          light: "#e6f6f5"
+          DEFAULT: "#85ABD5", // Sky Blue from image
+          dark: "#6A8EB8",
+          light: "#E7F0F9",
+          deep: "#4D76A5"
         },
-        secondary: "#FF6B6B", // Point Coral
+        secondary: {
+          DEFAULT: "#C64A47", // Reddish from image
+          dark: "#A33D3A",
+          light: "#F9EAEA"
+        },
         navy: {
-          900: "#0B1120",
-          800: "#1E293B",
-          DEFAULT: "#0B1120"
+          900: "#0F1B2C",
+          800: "#1A2F4B",
+          DEFAULT: "#1A2F4B"
         },
+        background: {
+          light: "#F4F7FA"
+        }
       },
       fontFamily: {
         sans: ["Manrope", "Noto Sans KR", "sans-serif"],

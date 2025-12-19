@@ -1,16 +1,16 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useProducts } from '../context/ProductContext';
 
 const Login: React.FC = () => {
+  const { t } = useProducts();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // 데모 로그인 처리
-    alert('성공적으로 로그인되었습니다.');
+    alert(t.auth.successLogin);
     navigate('/');
   };
 
@@ -21,16 +21,16 @@ const Login: React.FC = () => {
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary mb-4">
             <span className="material-symbols-outlined text-2xl">lock</span>
           </div>
-          <h2 className="text-3xl font-black tracking-tight text-text-primary">로그인</h2>
+          <h2 className="text-3xl font-black tracking-tight text-text-primary">{t.auth.loginTitle}</h2>
           <p className="mt-2 text-sm text-text-secondary">
-            IncareBio 계정으로 서비스를 이용해보세요.
+            {t.auth.loginDesc}
           </p>
         </div>
         
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="email-address" className="block text-sm font-bold text-text-primary mb-1">이메일 주소</label>
+              <label htmlFor="email-address" className="block text-sm font-bold text-text-primary mb-1">{t.auth.email}</label>
               <input
                 id="email-address"
                 name="email"
@@ -44,7 +44,7 @@ const Login: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-bold text-text-primary mb-1">비밀번호</label>
+              <label htmlFor="password" className="block text-sm font-bold text-text-primary mb-1">{t.auth.pw}</label>
               <input
                 id="password"
                 name="password"
@@ -52,7 +52,7 @@ const Login: React.FC = () => {
                 autoComplete="current-password"
                 required
                 className="relative block w-full rounded-lg border border-gray-300 px-3 py-3 text-text-primary placeholder-gray-400 focus:z-10 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm transition-colors"
-                placeholder="비밀번호를 입력해주세요"
+                placeholder={t.auth.pwPlaceholder}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -68,13 +68,13 @@ const Login: React.FC = () => {
                 className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
               />
               <label htmlFor="remember-me" className="ml-2 block text-sm text-text-secondary cursor-pointer select-none">
-                로그인 상태 유지
+                {t.auth.remember}
               </label>
             </div>
 
             <div className="text-sm">
               <a href="#" className="font-medium text-primary hover:text-primary/80 transition-colors">
-                비밀번호 찾기
+                {t.auth.forgot}
               </a>
             </div>
           </div>
@@ -84,7 +84,7 @@ const Login: React.FC = () => {
               type="submit"
               className="group relative flex w-full justify-center rounded-lg bg-primary px-4 py-3 text-sm font-bold text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-md"
             >
-              로그인
+              {t.auth.loginBtn}
             </button>
           </div>
         </form>
@@ -95,14 +95,14 @@ const Login: React.FC = () => {
                     <div className="w-full border-t border-gray-200"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                    <span className="bg-white px-2 text-text-secondary">또는</span>
+                    <span className="bg-white px-2 text-text-secondary">{t.auth.or}</span>
                 </div>
             </div>
             <div className="mt-6 text-center">
                  <p className="text-sm text-text-secondary">
-                    아직 계정이 없으신가요?{' '}
+                    {t.auth.noAccount}{' '}
                     <Link to="/signup" className="font-medium text-primary hover:text-primary/80 transition-colors">
-                        회원가입
+                        {t.auth.signupLink}
                     </Link>
                 </p>
             </div>

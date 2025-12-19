@@ -1,167 +1,128 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useProducts } from '../context/ProductContext';
 import ScrollAnimationWrapper from '../components/ScrollAnimationWrapper';
 
 const Home: React.FC = () => {
+  const { homeConfig, t } = useProducts();
+
   return (
     <div className="w-full overflow-hidden">
       {/* Hero Section */}
       <section className="relative min-h-screen bg-navy flex items-center pt-20">
+        {/* Decorative elements with new theme colors */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[80%] bg-primary/20 blur-[120px] rounded-full"></div>
-          <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[60%] bg-secondary/10 blur-[100px] rounded-full"></div>
+          <div className="absolute top-[-10%] right-[-10%] w-[70%] h-[90%] bg-primary/30 blur-[130px] rounded-full"></div>
+          <div className="absolute bottom-[-10%] left-[-5%] w-[50%] h-[70%] bg-secondary/15 blur-[110px] rounded-full"></div>
+          <div className="absolute top-[20%] left-[10%] w-[30%] h-[40%] bg-primary-deep/10 blur-[90px] rounded-full"></div>
         </div>
 
         <div className="container mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="flex flex-col gap-8">
               <ScrollAnimationWrapper animation="fade-in-up">
-                <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                  <span className="flex h-2 w-2 rounded-full bg-secondary animate-pulse"></span>
-                  <span className="text-xs font-bold text-white tracking-widest uppercase">Premium Health Care Service</span>
+                <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-xl">
+                  <span className="flex h-2.5 w-2.5 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(133,171,213,0.8)]"></span>
+                  <span className="text-xs font-black text-white tracking-[0.2em] uppercase">{homeConfig.heroBadge}</span>
                 </div>
               </ScrollAnimationWrapper>
 
               <ScrollAnimationWrapper animation="fade-in-up" delay={0.1}>
-                <h1 className="text-5xl md:text-7xl font-black text-white leading-[1.1] tracking-tight">
-                  데이터 기반의<br/>
-                  <span className="text-primary">과학적인</span><br/>
-                  건강 솔루션
+                <h1 className="text-5xl md:text-8xl font-black text-white leading-[1.05] tracking-tight whitespace-pre-line">
+                  {homeConfig.heroTitle}
                 </h1>
               </ScrollAnimationWrapper>
 
               <ScrollAnimationWrapper animation="fade-in-up" delay={0.2}>
-                <p className="text-lg md:text-xl text-slate-400 max-w-xl leading-relaxed">
-                  전문가의 정밀 분석을 통한 개인 맞춤형 영양 관리. 당신의 신체적 특성과 라이프스타일에 딱 맞는 최적의 건강 로드맵을 설계해 드립니다.
+                <p className="text-lg md:text-2xl text-slate-300 max-w-xl leading-relaxed break-keep">
+                  {homeConfig.heroDesc}
                 </p>
               </ScrollAnimationWrapper>
 
-              <ScrollAnimationWrapper className="flex flex-wrap gap-4" animation="fade-in-up" delay={0.3}>
-                {/* External link to "a 프로젝트" on Vercel */}
+              <ScrollAnimationWrapper className="flex flex-wrap gap-5" animation="fade-in-up" delay={0.3}>
                 <a 
-                  href="https://peroxfarma-hpv2-0-mbfy.vercel.app" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="h-14 px-10 flex items-center justify-center rounded-full bg-primary text-white font-bold text-lg hover:brightness-110 transition-all shadow-xl shadow-primary/20"
+                  href={homeConfig.heroStartUrl} 
+                  className="h-16 px-12 flex items-center justify-center rounded-full bg-secondary text-white font-black text-xl hover:brightness-110 transition-all shadow-2xl shadow-secondary/30 transform hover:-translate-y-1"
                 >
-                  시작하기
+                  {t.home.startBtn}
                 </a>
-                <Link to="/contact" className="h-14 px-10 flex items-center justify-center rounded-full border-2 border-white/20 text-white font-bold text-lg hover:bg-white/5 transition-all">
-                  상담 신청
+                <Link to="/contact" className="h-16 px-12 flex items-center justify-center rounded-full border-2 border-white/30 text-white font-black text-xl hover:bg-white/10 transition-all backdrop-blur-sm">
+                  {t.home.consultBtn}
                 </Link>
-              </ScrollAnimationWrapper>
-
-              <ScrollAnimationWrapper animation="fade-in-up" delay={0.4} className="flex items-center gap-8 mt-4">
-                <div>
-                  <p className="text-2xl font-black text-white">98%</p>
-                  <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Customer Satisfaction</p>
-                </div>
-                <div className="w-px h-10 bg-white/10"></div>
-                <div>
-                  <p className="text-2xl font-black text-white">12,000+</p>
-                  <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Active Members</p>
-                </div>
               </ScrollAnimationWrapper>
             </div>
 
             <ScrollAnimationWrapper animation="zoom-in" delay={0.2} className="relative">
-              <div className="relative aspect-square w-full max-w-[600px] mx-auto">
-                {/* Floating Cards */}
-                <div className="absolute top-10 -left-6 z-30 bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-2xl animate-float">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-                      <span className="material-symbols-outlined text-3xl">verified_user</span>
-                    </div>
-                    <div>
-                      <p className="text-xs text-slate-500 font-bold">건강 지수</p>
-                      <p className="text-xl font-black text-navy">Optimal</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="absolute bottom-10 -right-6 z-30 bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-2xl animate-float" style={{ animationDelay: '1.5s' }}>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                      <span className="material-symbols-outlined text-3xl">analytics</span>
-                    </div>
-                    <div>
-                      <p className="text-xs text-slate-500 font-bold">AI 분석 리포트</p>
-                      <p className="text-xl font-black text-navy">완료</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Main Hero Image with Blob Mask */}
-                <div className="w-full h-full overflow-hidden image-mask-blob border-[12px] border-white/5 shadow-2xl relative z-20">
+              <div className="relative aspect-square w-full max-w-[650px] mx-auto">
+                {/* Visual frame with Primary-Deep color border */}
+                <div className="w-full h-full overflow-hidden image-mask-blob border-[16px] border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.4)] relative z-20 bg-navy-700/50 backdrop-blur-3xl">
                   <img 
-                    src="https://images.unsplash.com/photo-1576091160550-217358c7e618?q=80&w=2070&auto=format&fit=crop" 
-                    alt="Scientific Health" 
-                    className="w-full h-full object-cover"
+                    src={homeConfig.heroImageUrl} 
+                    alt="Data Driven Health" 
+                    className="w-full h-full object-cover opacity-85 mix-blend-screen scale-110"
                   />
                 </div>
+                {/* Accent glow behind image */}
+                <div className="absolute inset-0 bg-primary/20 blur-[60px] image-mask-blob z-10 scale-95"></div>
               </div>
             </ScrollAnimationWrapper>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-32 bg-white">
+      {/* Services Section with Sky Blue Accents */}
+      <section className="py-40 bg-background-light">
         <div className="container mx-auto max-w-[1400px] px-4">
-          <div className="text-center max-w-3xl mx-auto mb-20">
+          <div className="text-center max-w-4xl mx-auto mb-24">
             <ScrollAnimationWrapper animation="fade-in-up">
-              <h4 className="text-primary font-bold uppercase tracking-widest mb-4">Core Services</h4>
-              <h2 className="text-4xl md:text-5xl font-black text-navy leading-tight">
-                개인 맞춤형 정밀 헬스케어의 기준
+              <h4 className="text-primary-deep font-black uppercase tracking-[0.3em] mb-6 text-sm">{homeConfig.serviceSubtitle}</h4>
+              <h2 className="text-3xl md:text-6xl font-black text-navy leading-tight whitespace-nowrap">
+                {homeConfig.serviceTitle}
               </h2>
             </ScrollAnimationWrapper>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: 'biotech', title: 'DNA 분석 기술', desc: '유전체 분석을 통해 타고난 신체적 특징과 잠재적 위험 요소를 파악합니다.' },
-              { icon: 'clinical_notes', title: '라이프스타일 트래킹', desc: '식습관, 수면, 운동 데이터를 실시간으로 수집하여 일상의 밸런스를 찾습니다.' },
-              { icon: 'medication_liquid', title: '맞춤형 영양 설계', desc: '분석된 데이터를 바탕으로 현재 내 몸에 가장 필요한 영양 성분만을 조합합니다.' }
-            ].map((item, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {homeConfig.services.map((item, idx) => (
               <ScrollAnimationWrapper 
                 key={idx} 
                 animation="fade-in-up" 
                 delay={idx * 0.1}
-                className="group p-10 rounded-[40px] bg-slate-50 hover:bg-white hover:shadow-2xl hover:shadow-primary/10 transition-all border border-transparent hover:border-primary/10"
+                className="group p-12 rounded-[50px] bg-white hover:bg-primary hover:shadow-[0_30px_60px_rgba(133,171,213,0.3)] transition-all duration-500 border border-slate-100 hover:border-transparent"
               >
-                <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-primary mb-8 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all">
-                  <span className="material-symbols-outlined text-4xl">{item.icon}</span>
+                <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center text-primary mb-10 group-hover:scale-110 group-hover:bg-white group-hover:text-primary transition-all duration-500 shadow-sm">
+                  <span className="material-symbols-outlined text-5xl">{item.icon}</span>
                 </div>
-                <h3 className="text-2xl font-bold text-navy mb-4">{item.title}</h3>
-                <p className="text-slate-500 leading-relaxed mb-8">{item.desc}</p>
-                <Link to="/about" className="inline-flex items-center gap-2 font-bold text-primary group-hover:gap-4 transition-all">
-                  상세보기 <span className="material-symbols-outlined">arrow_forward</span>
-                </Link>
+                <h3 className="text-2xl font-black text-navy mb-5 group-hover:text-white transition-colors duration-500">{item.title}</h3>
+                <p className="text-slate-500 leading-relaxed break-keep group-hover:text-white/80 transition-colors duration-500 text-lg">{item.desc}</p>
               </ScrollAnimationWrapper>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-32">
+      {/* CTA Section using Secondary color for impact */}
+      <section className="py-40">
         <div className="container mx-auto max-w-[1400px] px-4">
           <ScrollAnimationWrapper animation="zoom-in">
-            <div className="relative overflow-hidden rounded-[60px] bg-navy p-12 md:p-24 text-center">
-              <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/20 blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-              <div className="relative z-10 max-w-3xl mx-auto">
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-8">
-                  더 건강한 미래를 위한<br/>현명한 투자
+            <div className="relative overflow-hidden rounded-[80px] bg-navy-800 p-16 md:p-32 text-center shadow-2xl">
+              <div className="absolute inset-0">
+                <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-primary/20 blur-[100px]"></div>
+                <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-secondary/10 blur-[100px]"></div>
+              </div>
+              <div className="relative z-10 max-w-4xl mx-auto">
+                <h2 className="text-4xl md:text-7xl font-black text-white mb-10 leading-tight whitespace-pre-line">
+                  {t.home.ctaTitle}
                 </h2>
-                <p className="text-xl text-slate-400 mb-12">
-                  지금 바로 무료 AI 건강 진단을 받고 당신의 영양 상태를 확인해보세요.
+                <p className="text-xl md:text-2xl text-slate-300 mb-16 break-keep max-w-2xl mx-auto opacity-80">
+                  {t.home.ctaDesc}
                 </p>
-                <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                  <Link to="/signup" className="h-16 px-12 flex items-center justify-center rounded-full bg-white text-navy font-black text-lg hover:bg-slate-100 transition-all">
-                    회원가입 하기
+                <div className="flex flex-col sm:flex-row gap-8 justify-center">
+                  <Link to="/signup" className="h-20 px-16 flex items-center justify-center rounded-full bg-white text-navy font-black text-xl hover:bg-slate-100 transition-all shadow-xl">
+                    {t.home.signupBtn}
                   </Link>
-                  <Link to="/shop" className="h-16 px-12 flex items-center justify-center rounded-full bg-primary text-white font-black text-lg hover:brightness-110 transition-all">
-                    스토어 둘러보기
+                  <Link to="/shop" className="h-20 px-16 flex items-center justify-center rounded-full bg-secondary text-white font-black text-xl hover:brightness-110 transition-all shadow-xl shadow-secondary/30">
+                    {t.home.shopBtn}
                   </Link>
                 </div>
               </div>

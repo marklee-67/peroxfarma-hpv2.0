@@ -1,4 +1,6 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import { KO_DATA } from '../i18n/ko';
+import { EN_DATA } from '../i18n/en';
 
 export interface Product {
   id: number;
@@ -6,6 +8,29 @@ export interface Product {
   title: string;
   desc: string;
   img: string;
+}
+
+export interface HomeConfig {
+  heroBadge: string;
+  heroTitle: string;
+  heroDesc: string;
+  heroImageUrl: string;
+  heroStartUrl: string;
+  serviceSubtitle: string;
+  serviceTitle: string;
+  services: { icon: string; title: string; desc: string }[];
+  ctaTitle: string;
+  ctaDesc: string;
+}
+
+export interface FacilityConfig {
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImageUrl: string;
+  principles: { icon: string; title: string; desc: string }[];
+  certificationTitle: string;
+  certificationDesc: string;
+  certificationImageUrl: string;
 }
 
 export interface ShopConfig {
@@ -28,6 +53,7 @@ export interface ContactConfig {
   pageTitle: string;
   pageSubtitle: string;
   formTitle: string;
+  heroImageUrl: string;
 }
 
 export interface AdminCredentials {
@@ -41,11 +67,19 @@ export interface Inquiry {
   email: string;
   message: string;
   date: string;
+  lang: 'KO' | 'EN';
 }
 
 interface ProductContextType {
+  lang: 'KO' | 'EN';
+  setLang: (lang: 'KO' | 'EN') => void;
+  t: typeof KO_DATA;
   products: Product[];
   updateProduct: (updatedProduct: Product) => void;
+  homeConfig: HomeConfig;
+  updateHomeConfig: (config: HomeConfig) => void;
+  facilityConfig: FacilityConfig;
+  updateFacilityConfig: (config: FacilityConfig) => void;
   termsContent: string;
   setTermsContent: (content: string) => void;
   privacyContent: string;
@@ -58,283 +92,158 @@ interface ProductContextType {
   updateProductsConfig: (config: ProductsConfig) => void;
   contactConfig: ContactConfig;
   updateContactConfig: (config: ContactConfig) => void;
-  // New features
   adminCredentials: AdminCredentials;
   updateAdminCredentials: (creds: AdminCredentials) => void;
   inquiries: Inquiry[];
-  addInquiry: (inquiry: Omit<Inquiry, 'id' | 'date'>) => void;
+  addInquiry: (inquiry: Omit<Inquiry, 'id' | 'date' | 'lang'>) => void;
   deleteInquiry: (id: number) => void;
 }
-
-const defaultProducts: Product[] = [
-  {
-    id: 1,
-    tag: '#면역강화',
-    title: '면역 기능 강화 라인',
-    desc: '환절기, 지친 일상 속에서 건강을 지켜주는 필수 영양소 조합.',
-    img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=2030&auto=format&fit=crop'
-  },
-  {
-    id: 2,
-    tag: '#활력충전',
-    title: '에너지 및 활력 증진 라인',
-    desc: '아침을 개운하게, 하루를 활기차게 만들어주는 비타민 B군 복합체.',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCXs8ku-3T1dgT3fNd73oryva7rqS3GBWJTicB6p5V5aoNqmRh7T_7CPsZrCpv5_PvKO76fGNQxOz2_dExusMAjx89QELwntudozeeNdTVdKuzmI1NQcl4Lmeht657sBUnsqaLE0rKrdbec28SQsjTCl1zXmfuFBaXFSsi16dgNAQwYUSNDmircEjoWie9G1Wb7XJ1uS9tgPg9pdIQv7Araj6trIJ6hq59D6r0QaumXRJdaxk-vVzGR2Oc5_gWxUPdF-I4BfdIdS8Y'
-  },
-  {
-    id: 3,
-    tag: '#장건강',
-    title: '장 건강 개선 라인',
-    desc: '편안한 속을 위한 프로바이오틱스와 프리바이오틱스의 시너지 효과.',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuClBO24JMTNnvAtlIqZvaC6b_DAhH7IAgRBCOfmSDkiNKVqN6Fz-lE0lTBhp3TQyiiKpFddjybtTDkDOX5vx9mdBLY5W0eT-9Aaddcj2NFE5F1BT9ZlrIDAXLkx9dRUvyQCVRLBojv2-Puoi-Zhm_ic02gavGIg3mIP7J2zeU2JjRLCxjHpJKZzFwRfC5zYI2WsLL_QEMgbZ_0r40SuvEfVgy3mSEtARmzVj5bjUoMy5H_Vd_VuiuprilEJFSef_osJdXtHo44ICtY'
-  },
-  {
-    id: 4,
-    tag: '#피부미용',
-    title: '피부 건강 및 미용 라인',
-    desc: '속부터 채워 빛나는 피부를 위한 콜라겐, 히알루론산, 비타민C.',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB4szGd1Uzh0vIc9guZUeGnPLd6jvxH2EP2iXOYO1_LBdbGos4cLU2ch3aHEThnbblqUJUKWWozRcsPQdna9dxJ2Bbja_mBE6iLMGignFEbb13w53iYxnMeQv3XTPzoYyILW4j7clcwXn-WDugnzR2SABsFXaTsn6GB1eeGRL_tcx37iiPSjFe3GiofNVRaOQWvRkJLWUgt8RVr0zns3Qm7gtSTUFMrla5w7K1TISSjvzH8OBwz2uMoF_Py-Q5swh3lV0Nti-JXhMg'
-  }
-];
-
-const defaultTerms = `제1조 (목적)
-본 약관은 IncareBio(이하 "회사")가 제공하는 서비스의 이용조건 및 절차, 이용자와 회사의 권리, 의무, 책임사항을 규정함을 목적으로 합니다.
-
-제2조 (용어의 정의)
-1. "서비스"란 회사가 제공하는 모든 건강기능식품 구독 및 관련 제반 서비스를 의미합니다.
-2. "이용자"란 본 약관에 따라 회사가 제공하는 서비스를 받는 회원 및 비회원을 말합니다.
-
-제3조 (약관의 효력 및 변경)
-1. 본 약관은 서비스 화면에 게시하거나 기타의 방법으로 이용자에게 공지함으로써 효력이 발생합니다.
-2. 회사는 합리적인 사유가 발생할 경우 관련 법령에 위배되지 않는 범위 내에서 본 약관을 개정할 수 있습니다.`;
-
-const defaultPrivacy = `1. 개인정보의 수집 및 이용 목적
-IncareBio는 다음의 목적을 위해 개인정보를 수집 및 이용합니다.
-- 서비스 제공 및 계약의 이행
-- 회원 관리 및 본인 확인
-- 고객 상담 및 불만 처리
-- 마케팅 및 광고 활용
-
-2. 수집하는 개인정보의 항목
-- 필수항목: 이름, 이메일 주소, 비밀번호, 전화번호, 주소
-- 선택항목: 생년월일, 성별
-
-3. 개인정보의 보유 및 이용 기간
-회사는 원칙적으로 개인정보 수집 및 이용 목적이 달성된 후에는 해당 정보를 지체 없이 파기합니다. 단, 관계 법령에 따라 일정 기간 보관이 필요한 경우에는 해당 기간 동안 보관합니다.`;
-
-const defaultShopConfig: ShopConfig = {
-  url: '',
-  companyName: '',
-  description: ''
-};
-
-const defaultAboutConfig: AboutConfig = {
-  introText: `개인 맞춤형 건강기능식품의 미래를 선도하는 IncareBio입니다.\n인류의 건강 증진이라는 단 하나의 목표를 가지고 설립되었습니다.`,
-  mainImageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDBLUyjmkyJn-APHbwtu0R53oayyYN9AMP3cQXabelXkoQ3z-QV3y4F5BCPJf9mEWtcwc2-cpPgZb37Hbw6rdFDGHfqoQ7chsgB8g6fQkV8MokoJyfJspBkRYUo6vR2yY4r_SWxzbJCmfdmqUTwe6Y6g3wsCX6aNiBTDFpmbU_O_m1Zi7bHkNeesfOExdIJUnpp6l4X_rjRBYR5F4bRPV0qNUvMPXGS7g4GRwmaLx9_EwAqcrloYw65zvYHSGtFTQMO-XFiQEaHB0A'
-};
-
-const defaultProductsConfig: ProductsConfig = {
-  introText: `당신의 건강 목표 달성을 도와줄 다양한 제품들을 만나보세요.\n모든 제품은 엄격한 품질 관리를 거쳐 생산됩니다.`,
-  mainImageUrl: 'https://images.unsplash.com/photo-1624454002302-36b824d7bd0a?q=80&w=2070&auto=format&fit=crop'
-};
-
-const defaultContactConfig: ContactConfig = {
-  pageTitle: '무엇을 도와드릴까요?',
-  pageSubtitle: '궁금한 점이 있으시면 언제든지 문의해주세요.',
-  formTitle: '1:1 문의하기'
-};
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [products, setProducts] = useState<Product[]>(() => {
+  const getStoredItem = (key: string, defaultValue: any) => {
     try {
-      const saved = localStorage.getItem('products');
-      return saved ? JSON.parse(saved) : defaultProducts;
+      const saved = localStorage.getItem(key);
+      if (saved) return JSON.parse(saved);
+      return defaultValue;
     } catch (e) {
-      console.error('Failed to parse products from local storage', e);
-      return defaultProducts;
+      return defaultValue;
     }
-  });
-
-  const [termsContent, setTermsContentState] = useState<string>(() => {
-    try {
-      const saved = localStorage.getItem('termsContent');
-      return saved || defaultTerms;
-    } catch (e) {
-      return defaultTerms;
-    }
-  });
-
-  const [privacyContent, setPrivacyContentState] = useState<string>(() => {
-    try {
-      const saved = localStorage.getItem('privacyContent');
-      return saved || defaultPrivacy;
-    } catch (e) {
-      return defaultPrivacy;
-    }
-  });
-
-  const [shopConfig, setShopConfig] = useState<ShopConfig>(() => {
-    try {
-      const saved = localStorage.getItem('shopConfig');
-      return saved ? JSON.parse(saved) : defaultShopConfig;
-    } catch (e) {
-      return defaultShopConfig;
-    }
-  });
-
-  const [aboutConfig, setAboutConfig] = useState<AboutConfig>(() => {
-    try {
-      const saved = localStorage.getItem('aboutConfig');
-      return saved ? JSON.parse(saved) : defaultAboutConfig;
-    } catch (e) {
-      return defaultAboutConfig;
-    }
-  });
-
-  const [productsConfig, setProductsConfig] = useState<ProductsConfig>(() => {
-    try {
-      const saved = localStorage.getItem('productsConfig');
-      return saved ? JSON.parse(saved) : defaultProductsConfig;
-    } catch (e) {
-      return defaultProductsConfig;
-    }
-  });
-
-  const [contactConfig, setContactConfig] = useState<ContactConfig>(() => {
-    try {
-      const saved = localStorage.getItem('contactConfig');
-      return saved ? JSON.parse(saved) : defaultContactConfig;
-    } catch (e) {
-      return defaultContactConfig;
-    }
-  });
-
-  // Admin Credentials State
-  const [adminCredentials, setAdminCredentials] = useState<AdminCredentials>(() => {
-    try {
-      const saved = localStorage.getItem('adminCredentials');
-      return saved ? JSON.parse(saved) : { id: 'admin', pw: '1212' };
-    } catch (e) {
-      return { id: 'admin', pw: '1212' };
-    }
-  });
-
-  // Inquiries State
-  const [inquiries, setInquiries] = useState<Inquiry[]>(() => {
-    try {
-      const saved = localStorage.getItem('inquiries');
-      return saved ? JSON.parse(saved) : [];
-    } catch (e) {
-      return [];
-    }
-  });
-
-  // Persistence Effects
-  useEffect(() => {
-    localStorage.setItem('products', JSON.stringify(products));
-  }, [products]);
-
-  useEffect(() => {
-    localStorage.setItem('termsContent', termsContent);
-  }, [termsContent]);
-
-  useEffect(() => {
-    localStorage.setItem('privacyContent', privacyContent);
-  }, [privacyContent]);
-
-  useEffect(() => {
-    localStorage.setItem('shopConfig', JSON.stringify(shopConfig));
-  }, [shopConfig]);
-
-  useEffect(() => {
-    localStorage.setItem('aboutConfig', JSON.stringify(aboutConfig));
-  }, [aboutConfig]);
-
-  useEffect(() => {
-    localStorage.setItem('productsConfig', JSON.stringify(productsConfig));
-  }, [productsConfig]);
-
-  useEffect(() => {
-    localStorage.setItem('contactConfig', JSON.stringify(contactConfig));
-  }, [contactConfig]);
-
-  useEffect(() => {
-    localStorage.setItem('adminCredentials', JSON.stringify(adminCredentials));
-  }, [adminCredentials]);
-
-  useEffect(() => {
-    localStorage.setItem('inquiries', JSON.stringify(inquiries));
-  }, [inquiries]);
-
-  // Methods
-  const updateProduct = (updatedProduct: Product) => {
-    setProducts(prev => prev.map(p => p.id === updatedProduct.id ? updatedProduct : p));
   };
 
-  const setTermsContent = (content: string) => {
-    setTermsContentState(content);
-  };
+  const [lang, setLangState] = useState<'KO' | 'EN'>(() => (localStorage.getItem('appLang') as any) || 'KO');
+  const t = lang === 'KO' ? KO_DATA : EN_DATA;
 
-  const setPrivacyContent = (content: string) => {
-    setPrivacyContentState(content);
-  };
-
-  const updateShopConfig = (config: ShopConfig) => {
-    setShopConfig(config);
-  };
-
-  const updateAboutConfig = (config: AboutConfig) => {
-    setAboutConfig(config);
-  };
-
-  const updateProductsConfig = (config: ProductsConfig) => {
-    setProductsConfig(config);
-  };
-
-  const updateContactConfig = (config: ContactConfig) => {
-    setContactConfig(config);
-  };
-
-  const updateAdminCredentials = (creds: AdminCredentials) => {
-    setAdminCredentials(creds);
-  };
-
-  const addInquiry = (data: Omit<Inquiry, 'id' | 'date'>) => {
-    const newInquiry: Inquiry = {
-      ...data,
-      id: Date.now(),
-      date: new Date().toISOString()
+  const getInitialHome = (l: 'KO' | 'EN') => {
+    const curT = l === 'KO' ? KO_DATA : EN_DATA;
+    return {
+      ...curT.home,
+      // Updated to a high-quality "Data-driven Health" image (Digital DNA sequence)
+      heroImageUrl: 'https://images.unsplash.com/photo-1628595351029-c2bf17511435?q=80&w=2064&auto=format&fit=crop',
+      heroStartUrl: 'https://www.peroxfarma-hpv2-0-mbfy.vercel.app',
+      services: [
+        { icon: 'biotech', title: l === 'KO' ? 'DNA 분석 기술' : 'DNA Analysis', desc: l === 'KO' ? '유전체 분석을 통해 신체적 특징을 파악합니다.' : 'Identify physical characteristics through genomic analysis.' },
+        { icon: 'clinical_notes', title: l === 'KO' ? '라이프스타일 트래킹' : 'Lifestyle Tracking', desc: l === 'KO' ? '식습관과 운동 데이터를 실시간 수집합니다.' : 'Collecting diet and exercise data in real-time.' },
+        { icon: 'medication_liquid', title: l === 'KO' ? '맞춤형 영양 설계' : 'Custom Nutrition', desc: l === 'KO' ? '내 몸에 꼭 필요한 성분만을 조합합니다.' : 'Combines only the ingredients your body really needs.' }
+      ]
     };
-    setInquiries(prev => [newInquiry, ...prev]);
   };
 
-  const deleteInquiry = (id: number) => {
-    setInquiries(prev => prev.filter(item => item.id !== id));
+  const getInitialFacility = (l: 'KO' | 'EN') => {
+    return {
+      heroTitle: l === 'KO' ? '최첨단 제조시설' : 'State-of-the-art Facility',
+      heroSubtitle: l === 'KO' ? '엄격한 품질 관리 시스템' : 'Strict Quality Control System',
+      heroImageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBGQKj5M3L-nPCNn_GKUV7yxZi9LjxuGkt-UZCWvyZQmDEsStLTTe2XQIksVsLdqAxVDNz5huWRKVjKS4x0E-SX6JOycGzlBQhK1rNKeCjEUsw1kdbvWZnprQVq3Nl9coS_-9ti6Ms-F_9136F4_d_t_RzmsJvcvoJhgISKnhoW3MmqKVcJaT71UST1tHrw_3KJ74KDd0qs-TFuzRxOWH3iuCwpjAEKMfpzKP89TUd2un-gEf624Z6oX4l7MFPUWH-vJJkVRo8aiI0',
+      principles: [
+        { icon: 'verified', title: l === 'KO' ? '안정성 보장' : 'Safety Guaranteed', desc: l === 'KO' ? '모든 제조 공정은 국제 안전 기준을 준수합니다.' : 'All manufacturing processes comply with international safety standards.' },
+        { icon: 'psychology', title: l === 'KO' ? '기술 혁신' : 'Tech Innovation', desc: l === 'KO' ? '끊임없는 기술 개발로 정밀 제조를 실현합니다.' : 'Realizing precision manufacturing through constant development.' },
+        { icon: 'high_quality', title: l === 'KO' ? '최상급 원료' : 'Premium Ingredients', desc: l === 'KO' ? '전 세계에서 엄선한 최상급 원료만을 사용합니다.' : 'Only top-grade ingredients carefully selected worldwide.' }
+      ],
+      certificationTitle: l === 'KO' ? '품질 및 안전 인증' : 'Quality & Safety Certifications',
+      certificationDesc: l === 'KO' ? 'IncareBio는 GMP, HACCP, ISO 등 글로벌 표준 인증을 획득하여 소비자에게 가장 안전한 제품만을 제공할 것을 약속드립니다.' : 'IncareBio promises to provide only the safest products by obtaining global standard certifications such as GMP, HACCP, and ISO.',
+      certificationImageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop'
+    };
+  };
+
+  const [products, setProducts] = useState<Product[]>(() => getStoredItem(`products_${lang}`, t.products.items));
+  const [homeConfig, setHomeConfig] = useState<HomeConfig>(() => getStoredItem(`homeConfig_${lang}`, getInitialHome(lang)));
+  const [facilityConfig, setFacilityConfig] = useState<FacilityConfig>(() => getStoredItem(`facilityConfig_${lang}`, getInitialFacility(lang)));
+  const [termsContent, setTermsContentState] = useState<string>(() => localStorage.getItem(`termsContent_${lang}`) || (lang === 'KO' ? '이용약관 기본 내용입니다.' : 'Terms of service content.'));
+  const [privacyContent, setPrivacyContentState] = useState<string>(() => localStorage.getItem(`privacyContent_${lang}`) || (lang === 'KO' ? '개인정보처리방침 기본 내용입니다.' : 'Privacy policy content.'));
+  const [shopConfig, setShopConfig] = useState<ShopConfig>(() => getStoredItem(`shopConfig_${lang}`, { url: '', companyName: '', description: '' }));
+  const [aboutConfig, setAboutConfig] = useState<AboutConfig>(() => getStoredItem(`aboutConfig_${lang}`, {
+    introText: lang === 'KO' ? '과학적 데이터와 기술력을 바탕으로\n인류의 건강한 수명 연장을 실현합니다.' : 'Realizing healthy life extension for mankind\nbased on scientific data and technology.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070&auto=format&fit=crop'
+  }));
+  const [productsConfig, setProductsConfig] = useState<ProductsConfig>(() => getStoredItem(`productsConfig_${lang}`, {
+    introText: lang === 'KO' ? '개인의 건강 데이터를 분석하여 최적화된 영양 솔루션을 제공합니다.' : 'We provide optimized nutritional solutions by analyzing individual health data.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1624454002302-36b824d7bd0a?q=80&w=2070&auto=format&fit=crop'
+  }));
+  const [contactConfig, setContactConfig] = useState<ContactConfig>(() => getStoredItem(`contactConfig_${lang}`, {
+    pageTitle: t.contact.pageTitle,
+    pageSubtitle: t.contact.pageSubtitle,
+    formTitle: t.contact.formTitle,
+    heroImageUrl: 'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?q=80&w=2074&auto=format&fit=crop'
+  }));
+
+  const [adminCredentials, setAdminCredentials] = useState<AdminCredentials>(() => getStoredItem('adminCredentials', { id: 'admin', pw: '121212' }));
+  const [inquiries, setInquiries] = useState<Inquiry[]>(() => getStoredItem('inquiries', []));
+
+  useEffect(() => {
+    localStorage.setItem('appLang', lang);
+  }, [lang]);
+
+  useEffect(() => {
+    const curT = lang === 'KO' ? KO_DATA : EN_DATA;
+    
+    setHomeConfig(getStoredItem(`homeConfig_${lang}`, getInitialHome(lang)));
+    setFacilityConfig(getStoredItem(`facilityConfig_${lang}`, getInitialFacility(lang)));
+    setProducts(getStoredItem(`products_${lang}`, curT.products.items));
+    setShopConfig(getStoredItem(`shopConfig_${lang}`, { url: '', companyName: '', description: '' }));
+    
+    setAboutConfig(getStoredItem(`aboutConfig_${lang}`, {
+      introText: lang === 'KO' ? '과학적 데이터와 기술력을 바탕으로\n인류의 건강한 수명 연장을 실현합니다.' : 'Realizing healthy life extension for mankind\nbased on scientific data and technology.',
+      mainImageUrl: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070&auto=format&fit=crop'
+    }));
+
+    setProductsConfig(getStoredItem(`productsConfig_${lang}`, {
+      introText: lang === 'KO' ? '개인의 건강 데이터를 분석하여 최적화된 영양 솔루션을 제공합니다.' : 'We provide optimized nutritional solutions by analyzing individual health data.',
+      mainImageUrl: 'https://images.unsplash.com/photo-1624454002302-36b824d7bd0a?q=80&w=2070&auto=format&fit=crop'
+    }));
+
+    setContactConfig(getStoredItem(`contactConfig_${lang}`, {
+      pageTitle: curT.contact.pageTitle,
+      pageSubtitle: curT.contact.pageSubtitle,
+      formTitle: curT.contact.formTitle,
+      heroImageUrl: 'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?q=80&w=2074&auto=format&fit=crop'
+    }));
+
+    setTermsContentState(localStorage.getItem(`termsContent_${lang}`) || (lang === 'KO' ? '이용약관 기본 내용입니다.' : 'Terms of service content.'));
+    setPrivacyContentState(localStorage.getItem(`privacyContent_${lang}`) || (lang === 'KO' ? '개인정보처리방침 기본 내용입니다.' : 'Privacy policy content.'));
+
+  }, [lang]);
+
+  const setLang = (newLang: 'KO' | 'EN') => setLangState(newLang);
+  const updateProduct = (up: Product) => setProducts(p => {
+    const updated = p.map(pi => pi.id === up.id ? up : pi);
+    localStorage.setItem(`products_${lang}`, JSON.stringify(updated));
+    return updated;
+  });
+
+  const updateHomeConfig = (config: HomeConfig) => { setHomeConfig(config); localStorage.setItem(`homeConfig_${lang}`, JSON.stringify(config)); };
+  const updateFacilityConfig = (config: FacilityConfig) => { setFacilityConfig(config); localStorage.setItem(`facilityConfig_${lang}`, JSON.stringify(config)); };
+  const updateAboutConfig = (config: AboutConfig) => { setAboutConfig(config); localStorage.setItem(`aboutConfig_${lang}`, JSON.stringify(config)); };
+  const updateContactConfig = (config: ContactConfig) => { setContactConfig(config); localStorage.setItem(`contactConfig_${lang}`, JSON.stringify(config)); };
+
+  const addInquiry = (d: Omit<Inquiry, 'id' | 'date' | 'lang'>) => {
+    const newInquiry: Inquiry = { ...d, id: Date.now(), date: new Date().toISOString(), lang };
+    setInquiries(prev => {
+      const updated = [newInquiry, ...prev];
+      localStorage.setItem('inquiries', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   return (
     <ProductContext.Provider value={{ 
-      products, 
-      updateProduct,
-      termsContent,
-      setTermsContent,
-      privacyContent,
-      setPrivacyContent,
-      shopConfig,
-      updateShopConfig,
-      aboutConfig,
-      updateAboutConfig,
-      productsConfig,
-      updateProductsConfig,
-      contactConfig,
-      updateContactConfig,
-      adminCredentials,
-      updateAdminCredentials,
-      inquiries,
-      addInquiry,
-      deleteInquiry
+      lang, setLang, t,
+      products, updateProduct,
+      homeConfig, updateHomeConfig,
+      facilityConfig, updateFacilityConfig,
+      termsContent, setTermsContent: (c) => { setTermsContentState(c); localStorage.setItem(`termsContent_${lang}`, c); },
+      privacyContent, setPrivacyContent: (c) => { setPrivacyContentState(c); localStorage.setItem(`privacyContent_${lang}`, c); },
+      shopConfig, updateShopConfig: (c) => { setShopConfig(c); localStorage.setItem(`shopConfig_${lang}`, JSON.stringify(c)); },
+      aboutConfig, updateAboutConfig,
+      productsConfig, updateProductsConfig: (c) => { setProductsConfig(c); localStorage.setItem(`productsConfig_${lang}`, JSON.stringify(c)); },
+      contactConfig, updateContactConfig,
+      adminCredentials, updateAdminCredentials: (c) => { setAdminCredentials(c); localStorage.setItem('adminCredentials', JSON.stringify(c)); },
+      inquiries, addInquiry,
+      deleteInquiry: (id) => setInquiries(p => {
+        const updated = p.filter(i => i.id !== id);
+        localStorage.setItem('inquiries', JSON.stringify(updated));
+        return updated;
+      })
     }}>
       {children}
     </ProductContext.Provider>
@@ -343,8 +252,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
 
 export const useProducts = () => {
   const context = useContext(ProductContext);
-  if (!context) {
-    throw new Error('useProducts must be used within a ProductProvider');
-  }
+  if (!context) throw new Error('useProducts must be used within a ProductProvider');
   return context;
 };

@@ -1,13 +1,11 @@
-
 import React, { useEffect, useState } from 'react';
 import { useProducts } from '../context/ProductContext';
 import { Link } from 'react-router-dom';
 
 const Shop: React.FC = () => {
-  const { products, shopConfig } = useProducts();
+  const { products, shopConfig, t } = useProducts();
   const [showPopup, setShowPopup] = useState(false);
 
-  // Check if shop info is registered
   const hasShopInfo = shopConfig.companyName.trim() !== '';
 
   useEffect(() => {
@@ -20,14 +18,8 @@ const Shop: React.FC = () => {
     }
   }, [hasShopInfo]);
 
-  // Use configured values or fallbacks
-  const displayTitle = shopConfig.companyName || '공식 온라인 스토어';
-  const displayDesc = shopConfig.description || (
-    <>
-      IncareBio의 프리미엄 건강기능식품을 만나보세요.<br/>
-      정기 구독 시 최대 20% 할인 혜택을 드립니다.
-    </>
-  );
+  const displayTitle = shopConfig.companyName || t.shop.title;
+  const displayDesc = shopConfig.description || t.shop.desc;
 
   return (
     <div className="w-full bg-background-light min-h-screen relative">
@@ -35,7 +27,7 @@ const Shop: React.FC = () => {
       {showPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 transition-opacity duration-300">
           <div className="bg-black/80 text-white px-8 py-4 rounded-lg shadow-xl animate-bounce">
-            <span className="text-lg font-bold">준비중입니다</span>
+            <span className="text-lg font-bold">{t.shop.preparing}</span>
           </div>
         </div>
       )}
@@ -49,7 +41,7 @@ const Shop: React.FC = () => {
           {shopConfig.url && (
              <div className="mt-6">
                 <a href={shopConfig.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-white font-bold rounded-lg hover:bg-secondary/90 transition-colors w-full sm:w-auto justify-center">
-                    쇼핑몰 바로가기
+                    {t.shop.btn}
                     <span className="material-symbols-outlined text-sm">open_in_new</span>
                 </a>
              </div>
@@ -74,21 +66,13 @@ const Shop: React.FC = () => {
                 
                 <div className="mt-auto space-y-3">
                     <div className="flex items-center justify-between">
-                        <span className="text-sm text-text-secondary line-through">50,000원</span>
-                        <span className="text-xl font-bold text-text-primary">39,800원</span>
+                        <span className="text-sm text-text-secondary line-through">{t.shop.oldPrice}</span>
+                        <span className="text-xl font-bold text-text-primary">{t.shop.price}</span>
                     </div>
-                    {/* If external URL exists, link there, otherwise just a visual button */}
-                    {shopConfig.url ? (
-                         <a href={shopConfig.url} target="_blank" rel="noopener noreferrer" className="w-full py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center gap-2">
-                             <span className="material-symbols-outlined text-lg">shopping_cart</span>
-                             구매하기
-                         </a>
-                    ) : (
-                        <button className="w-full py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center gap-2">
-                            <span className="material-symbols-outlined text-lg">shopping_cart</span>
-                            구매하기
-                        </button>
-                    )}
+                    <button className="w-full py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center gap-2">
+                        <span className="material-symbols-outlined text-lg">shopping_cart</span>
+                        {t.shop.buyBtn}
+                    </button>
                 </div>
               </div>
             </div>
@@ -96,10 +80,10 @@ const Shop: React.FC = () => {
         </div>
         
         <div className="mt-12 md:mt-20 bg-primary/5 rounded-2xl p-6 md:p-10 text-center">
-            <h2 className="text-xl md:text-2xl font-bold text-text-primary mb-4 break-keep">대량 구매 및 기업 제휴 문의</h2>
-            <p className="text-sm md:text-base text-text-secondary mb-8 break-keep">임직원 선물용 또는 대량 구매가 필요하신가요? 특별한 혜택을 확인해보세요.</p>
+            <h2 className="text-xl md:text-2xl font-bold text-text-primary mb-4 break-keep">{t.shop.bulkTitle}</h2>
+            <p className="text-sm md:text-base text-text-secondary mb-8 break-keep">{t.shop.bulkDesc}</p>
             <Link to="/contact" className="inline-block px-8 py-3 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-white transition-colors w-full sm:w-auto">
-                제휴 문의하기
+                {t.shop.bulkBtn}
             </Link>
         </div>
       </div>

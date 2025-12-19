@@ -1,14 +1,15 @@
+
 import React from 'react';
 import { useProducts } from '../context/ProductContext';
 import ScrollAnimationWrapper from '../components/ScrollAnimationWrapper';
 
 const About: React.FC = () => {
-  const { aboutConfig } = useProducts();
+  const { aboutConfig, t } = useProducts();
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const headerOffset = 80; // Adjusted for mobile header
+      const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
@@ -18,6 +19,13 @@ const About: React.FC = () => {
       });
     }
   };
+
+  // 배경색 매핑: 1. 고객중심(#81D3EB), 2. 과학기반(#B0DFDB), 3. 지속가능성(#BBB8DC)
+  const visionBgColors = [
+    'bg-[#81D3EB]', // 고객 중심
+    'bg-[#B0DFDB]', // 과학 기반
+    'bg-[#BBB8DC]'  // 지속 가능성
+  ];
 
   return (
     <div className="w-full bg-background-light">
@@ -29,78 +37,75 @@ const About: React.FC = () => {
         >
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
-        <ScrollAnimationWrapper className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-          <h1 className="text-4xl md:text-7xl lg:text-8xl font-black text-white mb-6 md:mb-8 tracking-tight">
-            회사소개
+        <ScrollAnimationWrapper 
+          className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4" 
+          animation="fade-in-up"
+        >
+          <h1 className="text-5xl md:text-7xl font-black text-white mb-6 md:mb-8 tracking-tight">
+            {t.nav.about}
           </h1>
-          <p className="text-lg md:text-3xl text-white/90 max-w-5xl whitespace-pre-line leading-relaxed break-keep">
+          <p className="text-lg md:text-3xl text-white/90 max-w-5xl whitespace-pre-line leading-relaxed">
             {aboutConfig.introText}
           </p>
         </ScrollAnimationWrapper>
       </section>
 
-      {/* Content */}
       <div className="mx-auto max-w-[1200px] px-4 py-12 md:py-16">
         
         {/* Navigation Tabs */}
         <div className="flex border-b border-gray-200 mb-12 gap-4 md:gap-8 overflow-x-auto scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
-          <button 
-            onClick={() => scrollToSection('vision')}
-            className="px-2 py-4 text-sm font-bold text-text-secondary hover:text-primary whitespace-nowrap transition-colors focus:outline-none flex-shrink-0"
-          >
-            비전/미션
-          </button>
-          <button 
-            onClick={() => scrollToSection('history')}
-            className="px-2 py-4 text-sm font-bold text-text-secondary hover:text-primary whitespace-nowrap transition-colors focus:outline-none flex-shrink-0"
-          >
-            연혁
-          </button>
-          <button 
-            onClick={() => scrollToSection('organization')}
-            className="px-2 py-4 text-sm font-bold text-text-secondary hover:text-primary whitespace-nowrap transition-colors focus:outline-none flex-shrink-0"
-          >
-            조직도
-          </button>
+          {Object.entries(t.about.tabs).map(([id, label]) => (
+            <button 
+              key={id}
+              onClick={() => scrollToSection(id)}
+              className="px-2 py-4 text-sm font-bold text-slate-400 hover:text-primary whitespace-nowrap transition-colors focus:outline-none flex-shrink-0"
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
-        {/* Vision Cards */}
+        {/* Vision Cards with Requested Colors */}
         <section id="vision" className="mb-16 md:mb-20">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-text-primary">우리의 비전과 미션</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { icon: 'group', title: '고객 중심', desc: '개인의 건강 데이터를 기반으로 가장 효과적인 솔루션을 제공합니다.' },
-              { icon: 'science', title: '과학 기반', desc: '최신 연구와 기술을 바탕으로 신뢰할 수 있는 제품을 만듭니다.' },
-              { icon: 'spa', title: '지속 가능성', desc: '건강한 삶과 환경의 조화를 추구하며 사회적 책임을 다합니다.' }
-            ].map((item, idx) => (
-              <div key={idx} className="bg-white p-6 md:p-8 rounded-xl border border-gray-200 shadow-sm flex flex-col gap-4">
-                <span className="material-symbols-outlined text-4xl text-primary">{item.icon}</span>
-                <div>
-                  <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                  <p className="text-sm text-text-secondary leading-relaxed break-keep">{item.desc}</p>
+          <h2 className="text-2xl md:text-3xl font-black mb-8 md:mb-12 text-navy text-center">{t.about.visionTitle}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {t.about.visionCards.map((item, idx) => (
+              <ScrollAnimationWrapper 
+                key={idx} 
+                animation="fade-in-up" 
+                delay={idx * 0.1}
+                className={`${visionBgColors[idx]} p-10 md:p-12 rounded-[40px] shadow-xl shadow-black/5 flex flex-col gap-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl group`}
+              >
+                <div className="w-20 h-20 rounded-3xl bg-white/40 backdrop-blur-md flex items-center justify-center text-navy shadow-sm group-hover:scale-110 transition-transform duration-500">
+                  <span className="material-symbols-outlined text-5xl">{item.icon}</span>
                 </div>
-              </div>
+                <div>
+                  <h3 className="text-2xl font-black mb-4 text-navy">{item.title}</h3>
+                  <p className="text-navy/70 leading-relaxed break-keep font-medium text-lg">
+                    {item.desc}
+                  </p>
+                </div>
+              </ScrollAnimationWrapper>
             ))}
           </div>
         </section>
 
         {/* History Timeline */}
         <section id="history" className="mb-16 md:mb-20">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-text-primary">걸어온 길</h2>
-          <div className="relative pl-4 border-l-2 border-gray-200 space-y-12">
-            {[
-              { year: '2023', events: ['11월: 개인 맞춤형 구독 서비스 공식 런칭', '07월: 시리즈 A 투자 유치 (100억 원)', '02월: 자체 R&D 연구소 설립'] },
-              { year: '2022', events: ['09월: 베타 서비스 오픈 및 사용자 1만 명 돌파', '03월: 시드 투자 유치'] },
-              { year: '2021', events: ['05월: IncareBio 법인 설립'] }
-            ].map((yearData, idx) => (
-              <div key={idx} className="relative pl-8">
-                <div className="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full bg-primary border-4 border-white shadow-sm"></div>
-                <h3 className="text-xl font-bold text-primary mb-4">{yearData.year}</h3>
-                <ul className="space-y-3">
+          <h2 className="text-2xl md:text-3xl font-black mb-10 text-navy">{t.about.historyTitle}</h2>
+          <div className="relative pl-4 border-l-4 border-primary/20 space-y-16">
+            {t.about.historyData.map((yearData, idx) => (
+              <div key={idx} className="relative pl-10">
+                <div className="absolute -left-[14px] top-1.5 h-6 w-6 rounded-full bg-primary border-4 border-white shadow-md"></div>
+                <h3 className="text-3xl font-black text-primary mb-6">{yearData.year}</h3>
+                <ul className="space-y-4">
                   {yearData.events.map((event, eIdx) => (
-                    <li key={eIdx} className="text-sm text-text-secondary break-keep">
-                      <strong className="font-semibold text-text-primary mr-2 block sm:inline">{event.split(':')[0]}:</strong>
-                      {event.split(':')[1]}
+                    <li key={eIdx} className="text-lg text-slate-600 font-medium break-keep flex gap-2">
+                      <span className="text-primary font-black">•</span>
+                      <span>
+                        <strong className="font-black text-navy mr-2">{event.split(':')[0]}</strong>
+                        {event.split(':')[1]}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -110,32 +115,34 @@ const About: React.FC = () => {
         </section>
 
         {/* Organization Chart */}
-        <section id="organization">
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-10 text-text-primary">조직 구성</h2>
+        <section id="organization" className="py-16">
+          <h2 className="text-2xl md:text-3xl font-black mb-12 md:mb-16 text-navy text-center">{t.about.orgTitle}</h2>
           <div className="flex flex-col items-center">
-            {/* CEO */}
-            <div className="bg-primary/10 px-8 py-4 rounded-lg border border-primary/20 text-center mb-8 relative w-full max-w-[200px]">
-              <p className="font-bold text-primary text-lg">CEO</p>
-              <p className="text-sm text-text-secondary">최고경영자</p>
-              <div className="absolute top-full left-1/2 w-px h-8 bg-gray-300 -translate-x-1/2"></div>
+            <div className="bg-navy p-1 rounded-3xl shadow-2xl mb-12 relative w-full max-w-[280px] transform hover:scale-105 transition-transform">
+              <div className="bg-white rounded-[22px] px-8 py-6 text-center">
+                <p className="font-black text-navy text-2xl mb-1">CEO</p>
+                <p className="text-sm font-bold text-primary-deep uppercase tracking-widest">{t.about.orgRoles.ceo}</p>
+              </div>
+              <div className="absolute top-full left-1/2 w-1 h-12 bg-navy/10 -translate-x-1/2"></div>
             </div>
 
-            {/* Departments */}
-            <div className="relative w-full max-w-3xl">
-              <div className="absolute top-0 left-1/6 right-1/6 h-px bg-gray-300 w-full hidden md:block"></div>
-              {/* Mobile vertical line logic needs to be different or simplified. Using grid without connecting lines for mobile is cleaner. */}
+            <div className="relative w-full max-w-5xl">
+              {/* Connector line for desktop */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-navy/10 hidden md:block rounded-full"></div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 pt-0 md:pt-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 pt-0 md:pt-12">
                  {[
-                   { name: '연구개발', sub: 'R&D' },
-                   { name: '마케팅', sub: 'Marketing' },
-                   { name: '운영', sub: 'Operations' }
+                   { name: t.about.orgRoles.rd, sub: 'R&D', color: 'bg-[#81D3EB]' },
+                   { name: t.about.orgRoles.marketing, sub: 'Marketing', color: 'bg-[#B0DFDB]' },
+                   { name: t.about.orgRoles.ops, sub: 'Operations', color: 'bg-[#BBB8DC]' }
                  ].map((dept, idx) => (
                    <div key={idx} className="relative flex flex-col items-center">
-                     <div className="absolute -top-8 left-1/2 w-px h-8 bg-gray-300 -translate-x-1/2 md:block hidden"></div>
-                     <div className="bg-white border border-gray-200 rounded-lg p-6 w-full text-center shadow-sm">
-                       <p className="font-bold text-text-primary">{dept.name}</p>
-                       <p className="text-sm text-text-secondary mt-1">{dept.sub}</p>
+                     <div className="absolute -top-12 left-1/2 w-1 h-12 bg-navy/10 -translate-x-1/2 md:block hidden"></div>
+                     <div className={`${dept.color} rounded-[32px] p-0.5 w-full shadow-lg transform hover:-translate-y-1 transition-all duration-300`}>
+                       <div className="bg-white rounded-[30px] p-8 text-center h-full">
+                         <p className="font-black text-navy text-xl mb-2">{dept.name}</p>
+                         <p className="text-xs font-black text-navy/40 uppercase tracking-[0.2em]">{dept.sub}</p>
+                       </div>
                      </div>
                    </div>
                  ))}
