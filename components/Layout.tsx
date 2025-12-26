@@ -208,7 +208,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <div className="text-sm space-y-2">
                 <p className="text-lg font-bold text-white">1588-1234</p>
                 <p>09:00 ~ 18:00</p>
-                <p>contact@incarebio.co.kr</p>
+                <p>info@incarebio.co.kr</p>
               </div>
             </div>
             <div>

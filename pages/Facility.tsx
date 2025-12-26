@@ -6,6 +6,13 @@ import ScrollAnimationWrapper from '../components/ScrollAnimationWrapper';
 const Facility: React.FC = () => {
   const { facilityConfig, t } = useProducts();
 
+  // 요청된 색상 배열: 1. 안정성 보장(#FFCC4E), 2. 기술혁신(#D5E05B), 3. 최상급 원료(#81D3EB)
+  const principleBgColors = [
+    '#FFCC4E', // 좌측: 안정성 보장
+    '#D5E05B', // 중간: 기술혁신
+    '#81D3EB'  // 우측: 최상급 원료
+  ];
+
   return (
     <div className="w-full">
       {/* Hero */}
@@ -16,7 +23,7 @@ const Facility: React.FC = () => {
         >
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
-        <ScrollAnimationWrapper className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+        <ScrollAnimationWrapper className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4" animation="fade-in-up">
           <h1 className="text-5xl md:text-7xl font-black text-white mb-6 md:mb-8 tracking-tight break-keep whitespace-pre-line">
             {facilityConfig.heroTitle}
           </h1>
@@ -27,36 +34,45 @@ const Facility: React.FC = () => {
       </section>
 
       <div className="mx-auto max-w-[1200px] px-4 py-12 md:py-20">
-        {/* Principles */}
+        {/* Principles Section with Requested Colors */}
         <section className="mb-16 md:mb-20">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-navy">{t.facility.principlesTitle}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <h2 className="text-3xl md:text-4xl font-black text-center mb-12 md:mb-16 text-navy">{t.facility.principlesTitle}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
              {facilityConfig.principles.map((item, idx) => (
-               <div key={idx} className="bg-white border border-gray-100 p-8 rounded-xl text-center shadow-sm hover:shadow-md transition-all">
-                 <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 text-primary">
-                    <span className="material-symbols-outlined text-3xl">{item.icon}</span>
+               <ScrollAnimationWrapper 
+                 key={idx} 
+                 animation="fade-in-up" 
+                 delay={idx * 0.1}
+                 className="p-10 md:p-12 rounded-[40px] text-center shadow-xl shadow-black/5 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl group border border-transparent"
+                 style={{ backgroundColor: principleBgColors[idx] }}
+               >
+                 <div className="w-20 h-20 bg-white/40 backdrop-blur-md rounded-3xl flex items-center justify-center mx-auto mb-8 text-navy shadow-sm group-hover:scale-110 transition-transform duration-500">
+                    <span className="material-symbols-outlined text-4xl">{item.icon}</span>
                  </div>
-                 <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                 <p className="text-slate-500 break-keep">{item.desc}</p>
-               </div>
+                 <h3 className="text-2xl font-black mb-4 text-navy">{item.title}</h3>
+                 <p className="text-navy/70 leading-relaxed break-keep font-medium text-lg">{item.desc}</p>
+               </ScrollAnimationWrapper>
              ))}
           </div>
         </section>
 
         {/* Process Steps */}
-        <section className="mb-16 md:mb-20 bg-gray-50 rounded-2xl p-6 md:p-12">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-navy">{t.facility.processTitle}</h2>
-            <p className="text-slate-500">{t.facility.processSubtitle}</p>
+        <section className="mb-16 md:mb-20 bg-slate-50/50 rounded-[60px] p-8 md:p-20 border border-slate-100">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl font-black mb-6 text-navy">{t.facility.processTitle}</h2>
+            <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto break-keep">{t.facility.processSubtitle}</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-12 relative">
+            {/* Connection Line for Desktop */}
+            <div className="absolute top-12 left-[10%] right-[10%] h-0.5 bg-slate-200 hidden md:block"></div>
+            
             {t.facility.processSteps.map((step, idx) => (
-              <div key={idx} className="flex flex-col items-center text-center">
-                 <div className="w-16 h-16 rounded-full border-2 border-primary bg-white text-primary flex items-center justify-center mb-4">
-                   <span className="material-symbols-outlined text-3xl">{step.icon}</span>
+              <div key={idx} className="flex flex-col items-center text-center relative z-10">
+                 <div className="w-24 h-24 rounded-full border-4 border-white bg-primary text-white flex items-center justify-center mb-6 shadow-xl shadow-primary/20 transform hover:scale-110 transition-transform">
+                   <span className="material-symbols-outlined text-4xl">{step.icon}</span>
                  </div>
-                 <h4 className="font-bold text-lg mb-2">{step.title}</h4>
-                 <p className="text-xs text-slate-500 break-keep">{step.desc}</p>
+                 <h4 className="font-black text-xl mb-3 text-navy">{step.title}</h4>
+                 <p className="text-sm text-slate-500 font-medium leading-relaxed break-keep">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -64,19 +80,19 @@ const Facility: React.FC = () => {
 
         {/* Certification & Lab */}
         <section className="mb-16 md:mb-20">
-          <div className="flex flex-col md:flex-row bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-             <div className="flex-1 p-8 md:p-10 flex flex-col justify-center order-2 md:order-1">
-               <h2 className="text-2xl md:text-3xl font-bold mb-6 text-navy">{facilityConfig.certificationTitle}</h2>
-               <p className="text-slate-500 mb-8 leading-relaxed break-keep">
+          <div className="flex flex-col md:flex-row bg-white rounded-[60px] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+             <div className="flex-1 p-10 md:p-20 flex flex-col justify-center order-2 md:order-1">
+               <h2 className="text-3xl md:text-5xl font-black mb-8 text-navy leading-tight">{facilityConfig.certificationTitle}</h2>
+               <p className="text-slate-500 mb-12 text-lg md:text-xl leading-relaxed break-keep font-medium">
                  {facilityConfig.certificationDesc}
                </p>
-               <div className="flex gap-4 md:gap-6 justify-start">
-                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm_qazdl_9k2lK6bqJ3r7tQfoivPWI8825agkSc58PSC8kaVL9M77Rm5_4aO6bVGpBLnBKwd81u7Y_vO3SABYFMze7fGgVBq7HfzyVifV3dXSPJq8FpUt10QNPqbhtwrNln7BP55cuFTwOzfgobl55sxG91lbDuPJjX1yRl-5XTBdC0UOYWhH1dE8eWBonH6bb5QKSV069NARKdXTu4UO7tN2UMuFLJLLLLReJjVZnhO5IPy7ZDamRN5Aj6gFrc0bE44wEqsH8_Zw" alt="GMP" className="h-12 md:h-16 object-contain" />
-                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm4wd4UwJtVIOcxXcP1FIu_pXkP8QCNOI7pNUqgaoYMZbE3BXbJH1A4SOLUIxckJ2VaKzHTLytbpHEduAv2XlUEbpeH2NkKxo54kJrEAVoa9L40kpT5z5R2Uvy2JFr52mxfwY3CfNTiFNZqv6F7PWjHxTANl6z88ssJjeSg-NMJmYSr4PA-FBCSZgLESAz7R3Kk5NHHIUILFLXvXxkRPQNSvvqoN4nR01ZuEOe9ca7yuuk9BtuBl8vxh5dLsopif2yVJLBDZJEhiE" alt="HACCP" className="h-12 md:h-16 object-contain" />
-                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLbMCmbcwjD1IYK8FSYAUr3ppT4XXq6lGCaZPxPOYq8Pr1xbPYrHywn14Lw2SxExclvYbSJa_VAEfqbELV5VZMzUIgfyKdCO1Y3NNahlXAHLfMF-MpzwFYAxf1_W40eeEXRk5O0fZkHTvAXNoV0a1AP1elgVnZN4NJIHOiDgavk3QoMGqttqCwjsqJcBB86w4SaHdfwB03blYR5k-mbDC6lYSpKEZBZWogOGX6q7FndBjhzzOk8OsVFvZWUYY1yYAwb9A67M5MRJc" alt="ISO" className="h-12 md:h-16 object-contain" />
+               <div className="flex flex-wrap gap-6 md:gap-10 justify-start items-center">
+                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm_qazdl_9k2lK6bqJ3r7tQfoivPWI8825agkSc58PSC8kaVL9M77Rm5_4aO6bVGpBLnBKwd81u7Y_vO3SABYFMze7fGgVBq7HfzyVifV3dXSPJq8FpUt10QNPqbhtwrNln7BP55cuFTwOzfgobl55sxG91lbDuPJjX1yRl-5XTBdC0UOYWhH1dE8eWBonH6bb5QKSV069NARKdXTu4UO7tN2UMuFLJLLLLReJjVZnhO5IPy7ZDamRN5Aj6gFrc0bE44wEqsH8_Zw" alt="GMP" className="h-12 md:h-16 object-contain grayscale hover:grayscale-0 transition-all cursor-help" title="GMP" />
+                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm4wd4UwJtVIOcxXcP1FIu_pXkP8QCNOI7pNUqgaoYMZbE3BXbJH1A4SOLUIxckJ2VaKzHTLytbpHEduAv2XlUEbpeH2NkKxo54kJrEAVoa9L40kpT5z5R2Uvy2JFr52mxfwY3CfNTiFNZqv6F7PWjHxTANl6z88ssJjeSg-NMJmYSr4PA-FBCSZgLESAz7R3Kk5NHHIUILFLXvXxkRPQNSvvqoN4nR01ZuEOe9ca7yuuk9BtuBl8vxh5dLsopif2yVJLBDZJEhiE" alt="HACCP" className="h-12 md:h-16 object-contain grayscale hover:grayscale-0 transition-all cursor-help" title="HACCP" />
+                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLbMCmbcwjD1IYK8FSYAUr3ppT4XXq6lGCaZPxPOYq8Pr1xbPYrHywn14Lw2SxExclvYbSJa_VAEfqbELV5VZMzUIgfyKdCO1Y3NNahlXAHLfMF-MpzwFYAxf1_W40eeEXRk5O0fZkHTvAXNoV0a1AP1elgVnZN4NJIHOiDgavk3QoMGqttqCwjsqJcBB86w4SaHdfwB03blYR5k-mbDC6lYSpKEZBZWogOGX6q7FndBjhzzOk8OsVFvZWUYY1yYAwb9A67M5MRJc" alt="ISO" className="h-12 md:h-16 object-contain grayscale hover:grayscale-0 transition-all cursor-help" title="ISO 9001" />
                </div>
              </div>
-             <div className="flex-1 min-h-[250px] md:min-h-[300px] order-1 md:order-2">
+             <div className="flex-1 min-h-[350px] md:min-h-[500px] order-1 md:order-2">
                <img src={facilityConfig.certificationImageUrl} alt="Facility" className="w-full h-full object-cover" />
              </div>
           </div>
@@ -84,10 +100,10 @@ const Facility: React.FC = () => {
 
         {/* CTA */}
         <section>
-          <div className="bg-primary/5 rounded-2xl p-8 md:p-12 text-center">
-            <h3 className="text-xl md:text-2xl font-bold mb-4 text-navy">{t.facility.ctaTitle}</h3>
-            <p className="text-slate-500 mb-8 text-sm md:text-base">{t.facility.ctaDesc}</p>
-            <Link to="/products" className="inline-flex h-12 px-8 items-center justify-center rounded-lg bg-primary text-white font-bold hover:bg-primary/90 transition-colors w-full sm:w-auto">
+          <div className="bg-primary/5 rounded-[60px] p-12 md:p-24 text-center border border-primary/10">
+            <h3 className="text-3xl md:text-5xl font-black mb-6 text-navy">{t.facility.ctaTitle}</h3>
+            <p className="text-slate-500 mb-12 text-lg md:text-2xl font-medium max-w-2xl mx-auto break-keep">{t.facility.ctaDesc}</p>
+            <Link to="/products" className="inline-flex h-20 px-16 items-center justify-center rounded-full bg-primary text-white font-black text-xl hover:brightness-110 shadow-2xl shadow-primary/30 transition-all transform hover:scale-105">
               {t.facility.ctaBtn}
             </Link>
           </div>

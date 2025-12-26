@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useProducts } from '../context/ProductContext';
 import ScrollAnimationWrapper from '../components/ScrollAnimationWrapper';
@@ -119,7 +120,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">EMAIL</p>
-                  <p className="text-lg font-bold text-navy">contact@incarebio.co.kr</p>
+                  <p className="text-lg font-bold text-navy">info@incarebio.co.kr</p>
                 </div>
               </div>
             </div>
