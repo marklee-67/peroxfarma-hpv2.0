@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
@@ -177,7 +176,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </div>
       </div>
 
-      <main className="flex-grow pt-0">
+      <main className={`flex-grow ${!isHome ? 'pt-16' : 'pt-0'}`}>
         {children}
       </main>
 
@@ -206,7 +205,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div>
               <h4 className="font-bold text-white mb-6">{t.footer.support}</h4>
               <div className="text-sm space-y-2">
-                <p className="text-lg font-bold text-white">1588-1234</p>
+                <p>1588-1234</p>
                 <p>09:00 ~ 18:00</p>
                 <p>info@incarebio.co.kr</p>
               </div>
@@ -224,7 +223,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
             <div className="flex gap-6">
               <Link to="/terms" className="hover:text-white transition-colors">{t.footer.terms}</Link>
-              <Link to="/privacy" className="font-bold text-white hover:text-white transition-colors">{t.footer.privacy}</Link>
+              <Link to="/privacy" className="hover:text-white transition-colors">{t.footer.privacy}</Link>
               <Link to="/admin" className="hover:text-white transition-colors">{t.footer.admin}</Link>
             </div>
           </div>

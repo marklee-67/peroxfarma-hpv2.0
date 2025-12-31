@@ -12,23 +12,23 @@ export const EN_DATA = {
     services: 'Services',
     support: 'Support',
     address_title: 'Address',
-    address: '107, 19, Dosijiwon 1-gil, Godeok-myeon, Pyeongtaek-si, Gyeonggi-do, Korea',
+    address: 'HQ: Rm 329, STV, 19, Dosijiwon 1-gil, Godeok-myeon, Pyeongtaek-si, Gyeonggi-do\nSeoul Branch: Rm 1, 8F, 143, Teheran-ro, Gangnam-gu, Seoul\nFactory: 1923-14, Jinseong-ro, Geumwang-eup, Eumseong-gun, Chungcheongbuk-do',
     terms: 'Terms',
     privacy: 'Privacy Policy',
     admin: 'Admin'
   },
   home: {
-    heroBadge: 'Premium Health Care Service',
-    heroTitle: 'Data-Driven\nScientific\nHealth Solutions',
-    heroDesc: 'Personalized nutritional management through expert precision analysis. We design the perfect health roadmap for you.',
+    heroBadge: 'Total Manufacturing Solution',
+    heroTitle: 'The Most Trusted\nManufacturing Partner\nfor Your Brand',
+    heroDesc: 'Based on state-of-the-art smart factory infrastructure and expert research personnel, we provide specialized manufacturing solutions for health functional foods that guarantee the highest quality from product planning to finished product production.',
     serviceSubtitle: 'Core Services',
-    serviceTitle: 'The Standard of Precision Healthcare',
-    ctaTitle: 'A Wise Investment\nfor a Healthier Future',
-    ctaDesc: 'Start your free AI health diagnosis right now.',
-    startBtn: 'Get Started',
-    consultBtn: 'Consultation',
-    signupBtn: 'Sign Up',
-    shopBtn: 'Visit Shop'
+    serviceTitle: 'Partnership for Successful Brand Launching',
+    ctaTitle: 'Optimal Manufacturing Partnership\nfor Successful Business',
+    ctaDesc: 'Create market-leading products with IncareBio\'s technological prowess.',
+    startBtn: 'Manufacturing Inquiry',
+    consultBtn: 'Facility Tour',
+    signupBtn: 'Inquire Now',
+    shopBtn: 'Products'
   },
   about: {
     tabs: { vision: 'Vision/Mission', history: 'History', organization: 'Org Chart' },
@@ -50,7 +50,7 @@ export const EN_DATA = {
       }
     ],
     orgTitle: 'Organization',
-    orgRoles: { ceo: 'CEO', rd: 'R&D', marketing: 'Marketing', ops: 'Operations' }
+    orgRoles: { ceo: 'CEO', rd: 'R&D', marketing: 'Marketing', ops: 'Production' }
   },
   facility: {
     principlesTitle: 'Trusted Production Principles',
@@ -65,7 +65,8 @@ export const EN_DATA = {
     ],
     ctaTitle: 'Reliable products, meet them now',
     ctaDesc: 'Subscribe to scientific data-driven personalized supplements and take care of your health.',
-    ctaBtn: 'Explore Subscription'
+    ctaBtn: 'Explore Subscription',
+    preparingMsg: 'Service launch in March 2026'
   },
   products: {
     heroTitle: 'Products',

@@ -46,7 +46,7 @@ const Home: React.FC = () => {
                 >
                   {t.home.startBtn}
                 </a>
-                <Link to="/contact" className="h-16 px-12 flex items-center justify-center rounded-full border-2 border-white/30 text-white font-black text-xl hover:bg-white/10 transition-all backdrop-blur-sm">
+                <Link to="/facility" className="h-16 px-12 flex items-center justify-center rounded-full border-2 border-white/30 text-white font-black text-xl hover:bg-white/10 transition-all backdrop-blur-sm">
                   {t.home.consultBtn}
                 </Link>
               </ScrollAnimationWrapper>
@@ -118,10 +118,10 @@ const Home: React.FC = () => {
                   {t.home.ctaDesc}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-8 justify-center">
-                  <Link to="/signup" className="h-20 px-16 flex items-center justify-center rounded-full bg-white text-navy font-black text-xl hover:bg-slate-100 transition-all shadow-xl">
+                  <Link to="/contact" className="h-20 px-16 flex items-center justify-center rounded-full bg-white text-navy font-black text-xl hover:bg-slate-100 transition-all shadow-xl">
                     {t.home.signupBtn}
                   </Link>
-                  <Link to="/shop" className="h-20 px-16 flex items-center justify-center rounded-full bg-secondary text-white font-black text-xl hover:brightness-110 transition-all shadow-xl shadow-secondary/30">
+                  <Link to="/products" className="h-20 px-16 flex items-center justify-center rounded-full bg-secondary text-white font-black text-xl hover:brightness-110 transition-all shadow-xl shadow-secondary/30">
                     {t.home.shopBtn}
                   </Link>
                 </div>

@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { useProducts } from '../context/ProductContext';
 import ScrollAnimationWrapper from '../components/ScrollAnimationWrapper';
 
 const Facility: React.FC = () => {
   const { facilityConfig, t } = useProducts();
+  const [showPopup, setShowPopup] = useState(false);
 
   // 요청된 색상 배열: 1. 안정성 보장(#FFCC4E), 2. 기술혁신(#D5E05B), 3. 최상급 원료(#81D3EB)
   const principleBgColors = [
@@ -13,8 +13,41 @@ const Facility: React.FC = () => {
     '#81D3EB'  // 우측: 최상급 원료
   ];
 
+  useEffect(() => {
+    if (showPopup) {
+      const timer = setTimeout(() => setShowPopup(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showPopup]);
+
   return (
-    <div className="w-full">
+    <div className="w-full relative">
+      {/* Preparation Popup */}
+      {showPopup && (
+        <div className="fixed inset-0 z-[300] flex items-center justify-center px-4">
+          <div className="absolute inset-0 bg-navy/40 backdrop-blur-sm" onClick={() => setShowPopup(false)}></div>
+          <div className="relative bg-white rounded-[32px] p-10 shadow-2xl flex flex-col items-center gap-6 max-w-sm w-full text-center border border-slate-100 animate-zoom-in">
+            <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <span className="material-symbols-outlined text-5xl">event_upcoming</span>
+            </div>
+            <div>
+              <h3 className="text-2xl font-black text-navy mb-2">{t.facility.preparingMsg}</h3>
+              <p className="text-slate-500 leading-relaxed break-keep">
+                {t.lang === 'KO' 
+                  ? '더 나은 서비스를 위해 준비 중입니다.\n잠시만 기다려 주세요.' 
+                  : 'We are preparing for a better service.\nPlease wait a moment.'}
+              </p>
+            </div>
+            <button 
+              onClick={() => setShowPopup(false)}
+              className="w-full py-4 bg-navy text-white font-bold rounded-2xl hover:bg-slate-800 transition-all"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Hero */}
       <section className="relative w-full h-[400px] md:h-[500px]">
         <div 
@@ -86,7 +119,7 @@ const Facility: React.FC = () => {
                <p className="text-slate-500 mb-12 text-lg md:text-xl leading-relaxed break-keep font-medium">
                  {facilityConfig.certificationDesc}
                </p>
-               <div className="flex flex-wrap gap-6 md:gap-10 justify-start items-center">
+               <div className="flex wrap gap-6 md:gap-10 justify-start items-center">
                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm_qazdl_9k2lK6bqJ3r7tQfoivPWI8825agkSc58PSC8kaVL9M77Rm5_4aO6bVGpBLnBKwd81u7Y_vO3SABYFMze7fGgVBq7HfzyVifV3dXSPJq8FpUt10QNPqbhtwrNln7BP55cuFTwOzfgobl55sxG91lbDuPJjX1yRl-5XTBdC0UOYWhH1dE8eWBonH6bb5QKSV069NARKdXTu4UO7tN2UMuFLJLLLLReJjVZnhO5IPy7ZDamRN5Aj6gFrc0bE44wEqsH8_Zw" alt="GMP" className="h-12 md:h-16 object-contain grayscale hover:grayscale-0 transition-all cursor-help" title="GMP" />
                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm4wd4UwJtVIOcxXcP1FIu_pXkP8QCNOI7pNUqgaoYMZbE3BXbJH1A4SOLUIxckJ2VaKzHTLytbpHEduAv2XlUEbpeH2NkKxo54kJrEAVoa9L40kpT5z5R2Uvy2JFr52mxfwY3CfNTiFNZqv6F7PWjHxTANl6z88ssJjeSg-NMJmYSr4PA-FBCSZgLESAz7R3Kk5NHHIUILFLXvXxkRPQNSvvqoN4nR01ZuEOe9ca7yuuk9BtuBl8vxh5dLsopif2yVJLBDZJEhiE" alt="HACCP" className="h-12 md:h-16 object-contain grayscale hover:grayscale-0 transition-all cursor-help" title="HACCP" />
                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLbMCmbcwjD1IYK8FSYAUr3ppT4XXq6lGCaZPxPOYq8Pr1xbPYrHywn14Lw2SxExclvYbSJa_VAEfqbELV5VZMzUIgfyKdCO1Y3NNahlXAHLfMF-MpzwFYAxf1_W40eeEXRk5O0fZkHTvAXNoV0a1AP1elgVnZN4NJIHOiDgavk3QoMGqttqCwjsqJcBB86w4SaHdfwB03blYR5k-mbDC6lYSpKEZBZWogOGX6q7FndBjhzzOk8OsVFvZWUYY1yYAwb9A67M5MRJc" alt="ISO" className="h-12 md:h-16 object-contain grayscale hover:grayscale-0 transition-all cursor-help" title="ISO 9001" />
@@ -103,9 +136,12 @@ const Facility: React.FC = () => {
           <div className="bg-primary/5 rounded-[60px] p-12 md:p-24 text-center border border-primary/10">
             <h3 className="text-3xl md:text-5xl font-black mb-6 text-navy">{t.facility.ctaTitle}</h3>
             <p className="text-slate-500 mb-12 text-lg md:text-2xl font-medium max-w-2xl mx-auto break-keep">{t.facility.ctaDesc}</p>
-            <Link to="/products" className="inline-flex h-20 px-16 items-center justify-center rounded-full bg-primary text-white font-black text-xl hover:brightness-110 shadow-2xl shadow-primary/30 transition-all transform hover:scale-105">
+            <button 
+              onClick={() => setShowPopup(true)}
+              className="inline-flex h-20 px-16 items-center justify-center rounded-full bg-primary text-white font-black text-xl hover:brightness-110 shadow-2xl shadow-primary/30 transition-all transform hover:scale-105"
+            >
               {t.facility.ctaBtn}
-            </Link>
+            </button>
           </div>
         </section>
       </div>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useProducts } from '../context/ProductContext';
 import ScrollAnimationWrapper from '../components/ScrollAnimationWrapper';
@@ -134,7 +133,7 @@ const About: React.FC = () => {
                  {[
                    { name: t.about.orgRoles.rd, sub: 'R&D', color: 'bg-[#81D3EB]' },
                    { name: t.about.orgRoles.marketing, sub: 'Marketing', color: 'bg-[#B0DFDB]' },
-                   { name: t.about.orgRoles.ops, sub: 'Operations', color: 'bg-[#BBB8DC]' }
+                   { name: t.about.orgRoles.ops, sub: 'Production', color: 'bg-[#BBB8DC]' }
                  ].map((dept, idx) => (
                    <div key={idx} className="relative flex flex-col items-center">
                      <div className="absolute -top-12 left-1/2 w-1 h-12 bg-navy/10 -translate-x-1/2 md:block hidden"></div>

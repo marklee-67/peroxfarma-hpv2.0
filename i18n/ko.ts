@@ -12,23 +12,23 @@ export const KO_DATA = {
     services: '서비스',
     support: '고객센터',
     address_title: '주소',
-    address: '경기도 평택시 고덕면 도시지원1길 19, 107',
+    address: '본사 경기도 평택시 고덕면 도시지원1길 19, STV 329호\n서울지점 서울특별시 강남구 테헤란로 143, 8층 1호\n공장 충북 음성군 금왕읍 진성로 1923-14',
     terms: '이용약관',
     privacy: '개인정보처리방침',
     admin: '관리자'
   },
   home: {
-    heroBadge: 'Premium Health Care Service',
-    heroTitle: '데이터 기반의\n과학적인\n건강 솔루션',
-    heroDesc: '전문가의 정밀 분석을 통한 개인 맞춤형 영양 관리. 당신에게 딱 맞는 건강 로드맵을 설계해 드립니다.',
+    heroBadge: 'Total Manufacturing Solution',
+    heroTitle: '당신의 브랜드를 완성하는\n가장 신뢰받는\n제조 파트너',
+    heroDesc: '최첨단 스마트 팩토리 인프라와 전문 연구 인력을 기반으로, 제품 기획부터 완제품 생산까지 최상의 품질을 보장하는 건강기능식품 전문 제조 솔루션을 제공합니다.',
     serviceSubtitle: 'Core Services',
-    serviceTitle: '개인 맞춤형 정밀 헬스케어의 기준',
-    ctaTitle: '더 건강한 미래를 위한\n현명한 투자',
-    ctaDesc: '지금 바로 무료 AI 건강 진단을 시작해보세요.',
-    startBtn: '시작하기',
-    consultBtn: '상담 신청',
-    signupBtn: '회원가입 하기',
-    shopBtn: '쇼핑몰 둘러보기'
+    serviceTitle: '성공적인 브랜드 런칭을 위한 파트너십',
+    ctaTitle: '성공적인 비즈니스를 위한\n최적의 제조 파트너십',
+    ctaDesc: '인케어바이오의 기술력으로 시장을 선도하는 제품을 만드세요.',
+    startBtn: '제조 문의하기',
+    consultBtn: '시설 둘러보기',
+    signupBtn: '문의하기',
+    shopBtn: '제품소개'
   },
   about: {
     tabs: { vision: '비전/미션', history: '연혁', organization: '조직도' },
@@ -50,7 +50,7 @@ export const KO_DATA = {
       }
     ],
     orgTitle: '조직 구성',
-    orgRoles: { ceo: '최고경영자', rd: '연구개발', marketing: '마케팅', ops: '운영' }
+    orgRoles: { ceo: '최고경영자', rd: '연구개발', marketing: '마케팅', ops: '생산' }
   },
   facility: {
     principlesTitle: '신뢰할 수 있는 생산 원칙',
@@ -65,7 +65,8 @@ export const KO_DATA = {
     ],
     ctaTitle: '믿을 수 있는 제품, 지금 만나보세요',
     ctaDesc: '과학적인 데이터 기반의 개인 맞춤 영양제를 구독하고 건강을 챙겨보세요.',
-    ctaBtn: '구독 서비스 알아보기'
+    ctaBtn: '구독 서비스 알아보기',
+    preparingMsg: '2026년 3월 서비스 준비중'
   },
   products: {
     heroTitle: '제품소개',

@@ -1,10 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 import { useProducts } from '../context/ProductContext';
 import ScrollAnimationWrapper from '../components/ScrollAnimationWrapper';
 
 const Contact: React.FC = () => {
-  const { contactConfig, addInquiry, t } = useProducts();
+  const contactConfig = useProducts().contactConfig;
+  const addInquiry = useProducts().addInquiry;
+  const t = useProducts().t;
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,6 +14,7 @@ const Contact: React.FC = () => {
     agree: false
   });
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [showAgreeError, setShowAgreeError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const target = e.target;
@@ -30,7 +33,7 @@ const Contact: React.FC = () => {
       return;
     }
     if (!formData.agree) {
-      alert(t.lang === 'KO' ? '개인정보 수집 및 이용에 동의해주세요.' : 'Please agree to the privacy policy.');
+      setShowAgreeError(true);
       return;
     }
 
@@ -50,6 +53,13 @@ const Contact: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [showSuccessPopup]);
+
+  useEffect(() => {
+    if (showAgreeError) {
+      const timer = setTimeout(() => setShowAgreeError(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showAgreeError]);
 
   return (
     <div className="w-full bg-background-light min-h-screen relative">
@@ -74,6 +84,35 @@ const Contact: React.FC = () => {
         </ScrollAnimationWrapper>
       </section>
 
+      {/* Agreement Warning Popup */}
+      {showAgreeError && (
+        <div className="fixed inset-0 z-[400] flex items-center justify-center px-4">
+          <div className="absolute inset-0 bg-navy/20 backdrop-blur-sm" onClick={() => setShowAgreeError(false)}></div>
+          <div className="relative bg-white rounded-[32px] p-8 shadow-2xl flex flex-col items-center gap-6 max-w-sm w-full text-center border border-red-50 animate-fade-in-up">
+            <div className="w-20 h-20 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+              <span className="material-symbols-outlined text-5xl">priority_high</span>
+            </div>
+            <div>
+              <h3 className="text-xl font-black text-navy mb-2">
+                {t.lang === 'KO' ? '동의 확인 필요' : 'Agreement Required'}
+              </h3>
+              <p className="text-slate-500 leading-relaxed break-keep">
+                {t.lang === 'KO' 
+                  ? '개인정보 수집 및 이용에 동의를 체크해주세요.' 
+                  : 'Please check the agreement to the collection and use of personal information.'}
+              </p>
+            </div>
+            <button 
+              onClick={() => setShowAgreeError(false)}
+              className="w-full py-4 bg-navy text-white font-bold rounded-2xl hover:bg-slate-800 transition-all"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Success Popup */}
       {showSuccessPopup && (
         <div className="fixed inset-0 z-[300] flex items-center justify-center px-4">
           <div className="absolute inset-0 bg-navy/40 backdrop-blur-sm"></div>
@@ -111,7 +150,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">TEL</p>
-                  <p className="text-lg font-bold text-navy">1588-1234</p>
+                  <p className="text-navy/70 font-medium">1588-1234</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -120,7 +159,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">EMAIL</p>
-                  <p className="text-lg font-bold text-navy">info@incarebio.co.kr</p>
+                  <p className="text-navy/70 font-medium">info@incarebio.co.kr</p>
                 </div>
               </div>
             </div>
@@ -160,8 +199,8 @@ const Contact: React.FC = () => {
                     className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 md:p-5 focus:outline-none focus:bg-white transition-all text-navy text-lg resize-none"
                   ></textarea>
                 </div>
-                <div className="flex items-center gap-3 bg-slate-50/50 p-4 rounded-2xl">
-                  <input type="checkbox" id="agree" checked={formData.agree} onChange={handleChange} className="w-5 h-5 accent-primary cursor-pointer" />
+                <div className="flex items-center gap-3 bg-slate-50/50 p-4 rounded-2xl group cursor-pointer" onClick={() => setFormData(p => ({ ...p, agree: !p.agree }))}>
+                  <input type="checkbox" id="agree" checked={formData.agree} readOnly className="w-5 h-5 accent-primary cursor-pointer" />
                   <label htmlFor="agree" className="text-sm text-slate-600 cursor-pointer select-none">{t.contact.agree}</label>
                 </div>
                 <button type="button" onClick={handleSubmit} className="w-full bg-primary text-white font-black py-5 rounded-2xl hover:brightness-110 transition-all shadow-lg text-lg">

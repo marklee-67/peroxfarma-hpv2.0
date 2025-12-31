@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { 
   useProducts, 
@@ -133,7 +134,7 @@ const Admin: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background-light flex flex-col md:flex-row">
-      <aside className="w-full md:w-80 bg-navy p-8 flex flex-col gap-10 sticky top-0 h-auto md:h-screen shadow-2xl z-50">
+      <aside className="w-full md:w-80 bg-navy p-8 flex flex-col gap-10 sticky top-16 h-auto md:h-[calc(100vh-4rem)] shadow-2xl z-50 overflow-y-auto scrollbar-hide">
         <div className="flex items-center gap-4 px-2 text-white font-black text-2xl">
            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shadow-lg">
              <span className="material-symbols-outlined">health_and_safety</span>
@@ -146,7 +147,7 @@ const Admin: React.FC = () => {
           <button onClick={() => setLang('EN')} className={`flex-1 py-3 rounded-xl text-sm font-black transition-all ${lang === 'EN' ? 'bg-primary text-white shadow-lg' : 'text-white/40 hover:text-white/60'}`}>EN</button>
         </div>
 
-        <nav className="flex flex-col gap-2 overflow-y-auto">
+        <nav className="flex flex-col gap-2">
           <SidebarItem id="home" label={t.admin.tabs.home} icon="home" />
           <SidebarItem id="about" label={t.admin.tabs.about} icon="info" />
           <SidebarItem id="products" label={t.admin.tabs.products} icon="inventory_2" />
@@ -163,7 +164,7 @@ const Admin: React.FC = () => {
         </div>
       </aside>
 
-      <main className="flex-1 p-6 md:p-16 overflow-y-auto h-screen scrollbar-hide">
+      <main className="flex-1 p-6 md:p-16 overflow-y-auto">
         <div className="bg-white rounded-[48px] shadow-2xl p-10 md:p-16 border border-slate-100 max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-12">
             <h1 className="text-3xl font-black text-navy capitalize">{t.admin.tabs[activeTab]}</h1>
